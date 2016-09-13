@@ -1,0 +1,159 @@
+
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewPascal</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+  </head>
+  <body>
+
+    <div class="top-bar">
+      <div class="row">
+        <div class="top-bar-title">
+          <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
+            <button class="menu-icon dark" type="button" data-toggle></button>
+          </span>
+          <strong>Welcome to <span class="reserved">NewPascal</span>!</strong>
+        </div>
+        <div id="responsive-menu">
+          <div class="top-bar-left">
+            <ul class="dropdown menu" data-dropdown-menu>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="download.html">Download</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="http://synopse.info/forum/viewforum.php?id=21">Forum</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-1-bottom">
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="callout">
+          <div class="row">
+            <div class="large-12 columns text-center">
+              <h3 class="margin-0"><i class="icon-newspaper reserved"></i>&nbsp;Latest Release</h3>
+              <small>(<span id="last-news-date">date</span>)</small>
+            </div>
+            <div class="large-12 columns text-center">
+              <h5><div class="text-center"><b><span id="last-news-name">NewPascal vX.Y.Z</span></b></div></h5>
+            </div>
+            <div class="large-12 columns" id="last-news">
+            ... news text ...
+            </div>
+            <div class="large-12 columns">
+              <a href="https://github.com/dathox/newpascalpack/releases" class="float-right">View all releases</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="large-4 columns">
+        <div class="common-badge text-center">
+          <div>
+            <i class="icon-win8 reserved"></i> Windows
+          </div> 
+        </div>
+        <a class="expanded download-button button" id="compiler-windows"><i class="icon-download float-left"></i>NewPascal Pack</a>
+        <!--div class="expanded secondary button"><i class="icon-download float-left"></i>NewPascal Pack + mORMot (coming soon...)</div-->
+      </div>
+      <div class="large-4 columns">
+        <div class="common-badge text-center">
+          <div>
+            <i class="icon-linux reserved"></i> Linux
+          </div> 
+        </div>
+        <div class="expanded secondary button"><i class="icon-download float-left"></i>NewPascal Pack (coming soon...)</div>
+        <!--div class="expanded secondary button"><i class="icon-download float-left"></i>NewPascal Pack + mORMot (coming soon...)</div-->
+      </div>
+      <div class="large-4 columns">
+        <div class="common-badge text-center">
+          <div>
+            <i class="icon-raspberry-pi reserved"></i> Raspberry Pi
+          </div> 
+        </div>
+        <div class="expanded secondary button"><i class="icon-download float-left"></i>NewPascal Pack (coming soon...)</div>
+        <!--div class="expanded secondary button"><i class="icon-download float-left"></i>NewPascal Pack + mORMot (coming soon...)</div-->
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="callout">
+          <div class="row">
+            <div class="large-12 columns text-center">
+              <h3><i class="icon-cogs reserved"></i> Project build status</h3>
+            </div>
+            <div class="large-6 columns">
+              <div class="large-12 text-center padding-1">
+                  <i class="icon-win8 reserved"></i> Windows
+              </div>
+    
+              <div class="large-12 text-center row">
+                <div class="large-4 text-right columns">
+                    Compiler:
+                </div>
+                <div class="large-4 text-center columns">
+                    <img src="https://img.shields.io/appveyor/ci/maciej-izak/newpascal.svg?maxAge=2592000&style=flat">
+                </div>
+                <div class="large-4 text-left columns">
+                    <a href="https://github.com/dathox/newpascal"><i class="icon-github-circled float-left"></i> View on GitHub</a>
+                </div>
+              </div>
+    
+              <div class="large-12 text-center row">
+                <div class="large-4 text-right columns">
+                    IDE:
+                </div>
+                <div class="large-4 text-center columns">
+                    <img src="https://img.shields.io/appveyor/ci/maciej-izak/sparta.svg?maxAge=2592000&style=flat">
+                </div>
+                <div class="large-4 text-left columns">
+                    <a href="https://github.com/dathox/sparta"><i class="icon-github-circled float-left"></i> View on GitHub</a>
+                </div>
+              </div>
+    
+              <div class="large-12 text-center row">
+                <div class="large-4 text-right columns">
+                    Pack:
+                </div>
+                <div class="large-4 text-center columns">
+                    <img src="https://img.shields.io/appveyor/ci/maciej-izak/newpascalpack.svg?maxAge=2592000&style=flat">
+                </div>
+                <div class="large-4 text-left columns">
+                    <a href="https://github.com/dathox/newpascalpack"><i class="icon-github-circled float-left"></i> View on GitHub</a>
+                </div>
+              </div>
+              
+            </div>
+            <div class="large-6 columns padding-1">
+              <div class="large-12 text-center">
+                  <i class="icon-linux reserved"></i> Linux
+              </div>
+              <div class="large-12 text-center padding-1">
+                  <img class="float-center" src="https://img.shields.io/badge/build-coming%20soon...-lightgrey.svg">
+              </div>          
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="common-badge text-center">
+      DaThoX (2016)
+    </div>    
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
