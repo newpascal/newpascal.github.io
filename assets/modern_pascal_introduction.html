@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <meta name="author" content="Michalis Kamburelis and contributors: Maciej Izak">
 <title>Quick Modern Object Pascal for Programmers</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -18,7 +18,6 @@ audio:not([controls]){display:none;height:0}
 [hidden],template{display:none}
 script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
-body{margin:0}
 a{background:transparent}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
@@ -53,7 +52,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -65,7 +64,6 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
-body{-webkit-font-smoothing:antialiased}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
@@ -120,13 +118,16 @@ table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
-body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
 .clearfix:after,.float-group:after{clear:both}
-*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
 kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
@@ -591,9 +592,11 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_interfaces">9. Interfaces</a>
 <ul class="sectlevel2">
 <li><a href="#_good_corba_interfaces">9.1. Good (CORBA) interfaces</a></li>
-<li><a href="#_ugly_com_interfaces">9.2. Ugly (COM) interfaces</a></li>
-<li><a href="#_using_com_interfaces_with_reference_counting_disabled">9.3. Using COM interfaces with reference-counting disabled</a></li>
-<li><a href="#_typecasting_interfaces_without_as_operator">9.4. Typecasting interfaces without "as" operator</a></li>
+<li><a href="#_corba_and_com_types_of_interfaces">9.2. CORBA and COM types of interfaces</a></li>
+<li><a href="#_interfaces_guids">9.3. Interfaces GUIDs</a></li>
+<li><a href="#_ugly_com_interfaces">9.4. Ugly (COM) interfaces</a></li>
+<li><a href="#_using_com_interfaces_with_reference_counting_disabled">9.5. Using COM interfaces with reference-counting disabled</a></li>
+<li><a href="#_typecasting_interfaces_without_as_operator">9.6. Typecasting interfaces without "as" operator</a></li>
 </ul>
 </li>
 <li><a href="#_about_this_document">10. About this document</a></li>
@@ -873,7 +876,7 @@ Voila&#8201;&#8212;&#8201;a working GUI application, cross-platform, with native
 <p>And if <code>MyFunction(X)</code> returns <code>false</code>, then the value of expression is known (the value of <code>false and whatever</code> is always <code>false</code>), and <code>MyOtherFunction(Y)</code> will not be executed at all.</p>
 </li>
 <li>
-<p>Analogous rule is for <code>or</code> expression. There, if the expression is known to be <code>true</code> (because the 1st operand if <code>true</code>), the 2nd operand is not evaluated.</p>
+<p>Analogous rule is for <code>or</code> expression. There, if the expression is known to be <code>true</code> (because the 1st operand is <code>true</code>), the 2nd operand is not evaluated.</p>
 </li>
 <li>
 <p>This is particularly useful when writing expressions like</p>
@@ -1050,6 +1053,9 @@ You can avoid placing enum names in the global namespace by directive <code>{$sc
 <div class="paragraph">
 <p>In exchange, it looks clean, and is very optimized in execution. In particular, <em>the expressions for the lower and higher bound are only calculated once</em>, before the loop starts.</p>
 </div>
+<div class="paragraph">
+<p>Note that the value of the loop counter variable (<code>I</code> in this example) should be considered undefined after the loop has finished due to possible optimizations. It may cause a compiler warning. Unless you exit the loop prematurely by <code>Break</code> or <code>Exit</code>, in which case the counter variable is guaranteed to retain the last value.</p>
+</div>
 </li>
 <li>
 <p>The <code>for I in .. do ..</code> is similar to <code>foreach</code> construct in many modern languages. It works intelligently on many built-in types:</p>
@@ -1132,7 +1138,7 @@ You can avoid placing enum names in the global namespace by directive <code>{$sc
 <p>To simply output strings in Pascal, use the <code>Write</code> or <code>Writeln</code> routine. The latter automatically adds a newline at the end.</p>
 </div>
 <div class="paragraph">
-<p>This is a "magic" routine in Pascal. It takes a variable number of arguments and they can have any type. They are all converted to strings when displaying, with some special syntax for specifying padding and number precision.</p>
+<p>This is a "magic" routine in Pascal. It takes a variable number of arguments and they can have any type. They are all converted to strings when displaying, with a special syntax to specify padding and number precision.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1143,7 +1149,7 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 </div>
 </div>
 <div class="paragraph">
-<p>To explicitly use newline in string, use the <code>LineEnding</code> constant (FPC RTL) (the <em>Castle Game Engine</em> has also a shorter <code>NL</code> constant). Pascal strings do not interpret any special backslash sequences, so writing</p>
+<p>To explicitly use newline in the string, use the <code>LineEnding</code> constant (from FPC RTL). (The <em>Castle Game Engine</em> defines also a shorter <code>NL</code> constant.) Pascal strings do not interpret any special backslash sequences, so writing</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1171,13 +1177,13 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 <p>Note that this will only work in <em>console</em> applications. Make sure you have <code>{$apptype CONSOLE}</code> (and <strong>not</strong> <code>{$apptype GUI}</code>) defined in your main program file. On some operating systems it actually doesn&#8217;t matter and will work always (Unix), but on some operating systems trying to write something from a GUI application is an error (Windows).</p>
 </div>
 <div class="paragraph">
-<p><strong>In the Castle Game Engine:</strong> use <code>WritelnLog</code> or <code>WritelnWarning</code>, never <code>Writeln</code>. They will be always directed to some useful output. On Unix, standard output. On Windows GUI application, log file. On Android, the <em>Android logging facility</em> (visible when you use <code>adb logcat</code>).</p>
+<p><strong>In the Castle Game Engine:</strong> use <code>WritelnLog</code> or <code>WritelnWarning</code>, never <code>Writeln</code>, to print debug information. They will be always directed to some useful output. On Unix, standard output. On Windows GUI application, log file. On Android, the <em>Android logging facility</em> (visible when you use <code>adb logcat</code>). The use of <code>Writeln</code> should be limited to the cases when you write a command-line application (like a 3D model converter / generator) and you know that the <em>standard output</em> is available.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_converting_to_a_string">2.9. Converting to a string</h3>
 <div class="paragraph">
-<p>If you&#8217;re looking for a way to convert an arbitrary number of arguments to a string (instead of just directly outputting them), you have a couple of options.</p>
+<p>To convert an arbitrary number of arguments to a string (instead of just directly outputting them), you have a couple of options.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1189,7 +1195,7 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 <p><em>Advantage</em>: Absolutely flexible. There are many <code>XxxToStr</code> overloaded versions and friends (like <code>FormatFloat</code>), covering many types.</p>
 </li>
 <li>
-<p><em>Another advantage</em>: Consistent with the reverse functions. To convert a string (for example, user input) back to an integer or float, you use <code>StrToInt</code>, <code>StrToFloat</code> or friends (like <code>StrToIntDef</code>).</p>
+<p><em>Another advantage</em>: Consistent with the reverse functions. To convert a string (for example, user input) back to an integer or float, you use <code>StrToInt</code>, <code>StrToFloat</code> and friends (like <code>StrToIntDef</code>).</p>
 </li>
 <li>
 <p><em>Disadvantage</em>: A long concatenation of many <code>XxxToStr</code> calls and strings doesn&#8217;t look nice.</p>
@@ -1208,7 +1214,7 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 <p><em>Another advantage</em>: No compiler magic. You can use the same syntax to pass any number of arguments of an arbitrary type in your own routines (declare parameter as an <code>array of const</code>). You can then pass these arguments downward to <code>Format</code>, or deconstruct the list of parameters and do anything you like with them.</p>
 </li>
 <li>
-<p><em>Disadvantage</em>: Compiler does not check whether the pattern matches the arguments. Using a wrong placeholder type will result in an exception at runtime (<code>EConversionError</code> exception, not anything nasty like a segmentation fault).</p>
+<p><em>Disadvantage</em>: Compiler does not check whether the pattern matches the arguments. Using a wrong placeholder type will result in an exception at runtime (<code>EConvertError</code> exception, not anything nasty like a segmentation fault).</p>
 </li>
 </ul>
 </div>
@@ -1382,7 +1388,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 </div>
 </div>
 <div class="paragraph">
-<p>The unit <code>Graphics</code> (from Lazarus LCL) defines the <code>TColor</code> type. But the compiler will fail to compile the above unit, claiming that you don&#8217;t implement a procedure <code>ShowColor</code> that matches the interface declaration. The problem is that unit <code>GoogleMapsEngine</code> also defines a <code>TColor</code> type. And it is used only in the <code>implementation</code> section, therefore it <em>shadows</em> the <code>TColor</code> definition only in the implementation. The equivalent version of above unit, where the error is obvious, looks like this:</p>
+<p>The unit <code>Graphics</code> (from Lazarus LCL) defines the <code>TColor</code> type. But the compiler will fail to compile the above unit, claiming that you don&#8217;t implement a procedure <code>ShowColor</code> that matches the interface declaration. The problem is that unit <code>GoogleMapsEngine</code> also defines a <code>TColor</code> type. And it is used only in the <code>implementation</code> section, therefore it <em>shadows</em> the <code>TColor</code> definition only in the implementation. The equivalent version of the above unit, where the error is obvious, looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1390,7 +1396,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <span class="keyword">unit</span> UnitUsingColors;
 
 <span class="comment">// INCORRECT example.</span>
-<span class="comment">// This is what compiler &quot;sees&quot; when trying to compile previous example</span>
+<span class="comment">// This is what the compiler &quot;sees&quot; when trying to compile previous example</span>
 
 <span class="keyword">interface</span>
 
@@ -1440,7 +1446,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <div class="sect2">
 <h3 id="_exposing_one_unit_identifiers_from_another">3.3. Exposing one unit identifiers from another</h3>
 <div class="paragraph">
-<p>Sometimes you need to take an identifier from a used unit, and <em>expose</em> it from your new unit. The end result should be that using the new unit should make the identifier available in the namespace.</p>
+<p>Sometimes you want to take an identifier from one unit, and <em>expose</em> it in a new unit. The end result should be that using the new unit will make the identifier available in the namespace.</p>
 </div>
 <div class="paragraph">
 <p>Sometimes this is necessary to preserve backward compatibility with previous unit versions. Sometimes it&#8217;s nice to "hide" an internal unit this way.</p>
@@ -1646,7 +1652,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Make something that looks like a field (can be read and set) but underneath is realized by calling a <em>getter</em> and a <em>setter</em> function. A most typical usage is to perform some side-effect each time some value changes.</p>
+<p>Make something that looks like a field (can be read and set) but underneath is realized by calling a <em>getter</em> and <em>setter</em> methods. The typical usage is to perform some side-effect (e.g. redraw the screen) each time some value changes.</p>
 </li>
 <li>
 <p>Make something that looks like a field, but is read-only. In effect, it&#8217;s like a constant or a parameter-less function.</p>
@@ -1692,6 +1698,9 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 </div>
 </div>
 <div class="paragraph">
+<p>Note that instead of specifying a method, you can also specify a field (typically a private field) to directly get or set. In the example above, the <code>Color</code> property uses a <em>setter</em> method <code>SetColor</code>. But for getting the value, the <code>Color</code> property refers directly to the private field <code>FColor</code>. Directly referring to a field is faster than implementing trivial getter or setter methods (faster for you, and faster at execution).</p>
+</div>
+<div class="paragraph">
 <p>When declaring a property you specify:</p>
 </div>
 <div class="olist arabic">
@@ -1722,7 +1731,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <p>The <em>setter</em> function should always set the requested value, such that calling the <em>getter</em> yields it back. Do not reject invalid values silently in the "setter" (raise an exception if you must). Do not convert or scale the requested value. The idea is that after <code>MyClass.MyProperty := 123;</code> the programmer can expect that <code>MyClass.MyProperty = 123</code>.</p>
 </li>
 <li>
-<p>The <em>read-only properties</em> are often used to make some field read-only from the outside. Again, the good convention is to make it behave like a constant, at least constant for this object instance, at least constant for this object instance with this state. The value of the property should not change unexpectedly. Make it a function, not a property, if reading it has a side effect or returns something random.</p>
+<p>The <em>read-only properties</em> are often used to make some field read-only from the outside. Again, the good convention is to make it behave like a constant, at least constant for this object instance with this state. The value of the property should not change unexpectedly. <em>Make it a function, not a property, if using it has a side effect or returns something random.</em></p>
 </li>
 <li>
 <p>The <em>"backing" field of a property is almost always private</em>, since the idea of a property is to encapsulate all outside access to it.</p>
@@ -1879,7 +1888,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 <div class="sect2">
 <h3 id="_manual_and_automatic_freeing">5.3. Manual and automatic freeing</h3>
 <div class="paragraph">
-<p>In many situations, the need to free the instance is not much problem. You just write a destructor, that matches a constructor, and deallocates everything that was allocated in constructor (or, more completely, in the whole lifetime of the class). Be careful to only free each thing <strong>once</strong>. Usually it&#8217;s a good idea to set the freed reference to <code>nil</code>, usually it&#8217;s most comfortable to do it by calling the <code>FreeAndNil(A)</code>.</p>
+<p>In many situations, the need to free the instance is not much problem. You just write a destructor, that matches a constructor, and deallocates everything that was allocated in the constructor (or, more completely, in the whole lifetime of the class). Be careful to only free each thing <strong>once</strong>. Usually it&#8217;s a good idea to set the freed reference to <code>nil</code>, usually it&#8217;s most comfortable to do it by calling the <code>FreeAndNil(A)</code>.</p>
 </div>
 <div class="paragraph">
 <p>So, like this:</p>
@@ -1914,7 +1923,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 </div>
 </div>
 <div class="paragraph">
-<p>To avoid the need to explicitly free the instance, one can also use the <code>TComponent</code> feature of <em>"ownership"</em>. An object that is owned will be automatically freed by the owner. It&#8217;s automatically taken care of to not free an already freed instance this way (so things will also work correctly if you manually free the owned object earlier). We can change the previous example to this:</p>
+<p>To avoid the need to explicitly free the instance, one can also use the <code>TComponent</code> feature of <em>"ownership"</em>. An object that is <em>owned</em> will be automatically freed by the <em>owner</em>. The mechanism is smart and it will never free an already freed instance (so things will also work correctly if you manually free the owned object earlier). We can change the previous example to this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1985,7 +1994,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 
     Alternatively, we could avoid declaring Gun1 and Gun2,
     and instead use Guns[0] and Guns[1] in own code.
-    Or create a function like Gun1 that returns Guns[0]. }</span>
+    Or create a method like Gun1 that returns Guns[0]. }</span>
   Gun1 := <span class="keyword">nil</span>;
   Gun2 := <span class="keyword">nil</span>;
   <span class="keyword">inherited</span>;
@@ -2005,7 +2014,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 <p>If you copy a reference to the instance, such that you have two references to the same memory, and then one of them is freed&#8201;&#8212;&#8201;the other one becomes a <em>"dangling pointer"</em>. It should not be accessed, as it points to a memory that is no longer allocated. Accessing it may result in a runtime error, or garbage being returned (as the memory may be reused for other stuff in your program).</p>
 </div>
 <div class="paragraph">
-<p>Using the <code>FreeAndNil</code> to free the instance doesn&#8217;t help here. <code>FreeAndNil</code> sets to <code>nil</code> only the reference it got&#8201;&#8212;&#8201;there&#8217;s no way for it to set all other references.</p>
+<p>Using the <code>FreeAndNil</code> to free the instance doesn&#8217;t help here. <code>FreeAndNil</code> sets to <code>nil</code> only the reference it got&#8201;&#8212;&#8201;there&#8217;s no way for it to set all other references. Consider this code:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2016,23 +2025,32 @@ Properties can also be defined outside of class, at a unit level. They serve an 
   O2 := O1;
   FreeAndNil(O1);
 
-  <span class="comment">{ Now O1 is nil. If some code may access it, it can use
-    &quot;if O1 &lt;&gt; nil ...&quot; to avoid calling methods on a freed instance,
-    like
-
-      if O1 &lt;&gt; nil then Writeln(O1.ClassName);
-
-    Trying to access a field of a nil instance (or call a method
-    that accessed a field of a nil instance) results in a predictable
-    exception at runtime. }</span>
-
-  <span class="comment">{ With O2, things are more difficult. It's not nil, but it's invalid.
-    Trying to access a field of a non-nil invalid instance (or call a method
-    that accessed a field of such instance) results in an unpredictable
-    behavior - maybe an access violation exception, maybe a garbage data
-    returned. }</span>
+  <span class="comment">// what happens if we access O1 or O2 here?</span>
 <span class="keyword">end</span>;</code></pre>
 </div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>At the end of this block, the <code>O1</code> is <code>nil</code>. If some code has to access it, it can reliably use <code>if O1 &lt;&gt; nil &#8230;&#8203;</code> to avoid calling methods on a freed instance, like</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">if</span> O1 &lt;&gt; <span class="keyword">nil</span> <span class="keyword">then</span>
+  Writeln(O1.ClassName);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Trying to access a field of a <code>nil</code> instance results in a predictable exception at runtime. So even if some code will not check <code>O1 &lt;&gt; nil</code>, and will blindly access <code>O1</code> field, you will get a clear exception at runtime.</p>
+</div>
+<div class="paragraph">
+<p>Same goes for calling a virtual method, or calling a non-virtual method that accessed a field of a nil instance.</p>
+</div>
+</li>
+<li>
+<p>With <code>O2</code>, things are less predictable. It&#8217;s not <code>nil</code>, but it&#8217;s invalid. Trying to access a field of a non-nil invalid instance
+results in an unpredictable behavior&#8201;&#8212;&#8201;maybe an access violation exception, maybe a garbage data returned.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>There are various solutions to it:</p>
@@ -2040,10 +2058,13 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 <div class="ulist">
 <ul>
 <li>
-<p>One solution is to, well, be careful. Don&#8217;t assume anything about the lifetime of the reference, if it&#8217;s created by other code. If a class <code>TCar</code> has a field pointing to some instance of <code>TWheel</code>, it&#8217;s a <em>convention</em> that the reference to <em>wheel</em> is valid as long as the reference to <em>car</em> exists, and the <em>car</em> will free it&#8217;s <em>wheels</em> inside it&#8217;s destructor. But that&#8217;s just a convention, the documentation should mention if there&#8217;s something more complicated going on.</p>
+<p>One solution is to, well, be careful and read the documentation. Don&#8217;t assume anything about the lifetime of the reference, if it&#8217;s created by other code. If a class <code>TCar</code> has a field pointing to some instance of <code>TWheel</code>, it&#8217;s a <em>convention</em> that the reference to <em>wheel</em> is valid as long as the reference to <em>car</em> exists, and the <em>car</em> will free it&#8217;s <em>wheels</em> inside it&#8217;s destructor. But that&#8217;s just a convention, the documentation should mention if there&#8217;s something more complicated going on.</p>
 </li>
 <li>
-<p>The other solution is to use <code>TComponent</code> class "free notification" mechanism. One component can be notified when another component is freed, and thus set it&#8217;s reference to <code>nil</code>.</p>
+<p>In the above example, right after freeing the <code>O1</code> instance, you can simply set the <code>O2</code> variable explicitly to <code>nil</code>. That&#8217;s trivial in this simple case.</p>
+</li>
+<li>
+<p>The most future-proof solution is to use <code>TComponent</code> class "free notification" mechanism. One component can be notified when another component is freed, and thus set it&#8217;s reference to <code>nil</code>.</p>
 <div class="paragraph">
 <p>Thus you get something like a <em>weak reference</em>. It can cope with various usage scenarios, for example you can let the code from outside of the class to set your reference, and the outside code can also free the instance at anytime.</p>
 </div>
@@ -2269,7 +2290,7 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
 <p>Sometimes it&#8217;s more comfortable to alternatively override the <code>AssignTo</code> method in the source class, instead of overriding the <code>Assign</code> method in the target class.</p>
 </div>
 <div class="paragraph">
-<p>Be careful when calling <code>inherited</code> in the <code>Assign</code> implementation. You should <em>call inherited <code>TPersistent.Assign</code> only if you cannot handle the assignment in your code</em> (this allows the <code>AssignTo</code> method to work, or otherwise raise an exception when assignment cannot be done). On the other hand, if your class descends from another class that already implements the <code>Assign</code> method, then <em>always call the inherited <code>TMyClass.Assign</code></em>. See the example below.</p>
+<p>Be careful when calling <code>inherited</code> in the <code>Assign</code> implementation. You should <em>call inherited <code>TPersistent.Assign</code> only if you cannot handle the assignment in your code</em> (this allows the <code>AssignTo</code> method to work, or otherwise raise an exception when assignment cannot be done). On the other hand, if your class descends from another class that already implements the <code>Assign</code> method, then <em>always call the inherited <code>TMyClass.Assign</code></em>. See the example above.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3336,6 +3357,7 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
 
 <span class="keyword">type</span>
   IMyInterface = <span class="keyword">interface</span>
+  [<span class="string"><span class="delimiter">'</span><span class="content">{79352612-668B-4E8C-910A-26975E103CAC}</span><span class="delimiter">'</span></span>]
     <span class="keyword">procedure</span> Shoot;
   <span class="keyword">end</span>;
 
@@ -3395,22 +3417,116 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
 <span class="keyword">end</span>.</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-The default interface style
-is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <code>{$interfaces corba}</code> directive, in all modern code dealing with interfaces. The <em>COM</em> interfaces are somewhat an <em>embarrassment to the language</em>, to be honest (details in the next section).
-</td>
-</tr>
-</table>
+</div>
+<div class="sect2">
+<h3 id="_corba_and_com_types_of_interfaces">9.2. CORBA and COM types of interfaces</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Why are the interfaces (presented above) called "CORBA"?</dt>
+<dd>
+<p>The name <strong>CORBA</strong> is unfortunate. A better name would be <strong>bare interfaces</strong>. These interfaces are a <em>"pure language feature"</em>. Use them when you want to cast various classes as the same interface, because they share a common API.</p>
+<div class="paragraph">
+<p>While these types of interfaces can be used together with the <em>CORBA (Common Object Request Broker Architecture) technology</em> (see <a href="https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture" class="bare">https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture</a>), they are <em>not</em> tied to this technology in any way.</p>
+</div>
+</dd>
+<dt class="hdlist1">Is the <code>{$interfaces corba}</code> declaration needed?</dt>
+<dd>
+<p>Yes, because by default
+you create <em>COM interfaces</em>. This can be stated explicitly by saying <code>{$interfaces com}</code>, but usually it&#8217;s not needed since it&#8217;s the default state.</p>
+<div class="paragraph">
+<p>And I don&#8217;t advice using <em>COM interfaces</em>. Especially if you know interfaces from other programming languages. The <em>CORBA interfaces</em> in Pascal are exactly what you expect, equal to the interfaces in C# and Java. While the <em>COM interfaces</em> bring additional "features" that you probably don&#8217;t want.</p>
+</div>
+<div class="paragraph">
+<p>Note that the <code>{$interfaces xxx}</code> declaration only affects the interfaces that do not have any explicit ancestor (just the keyword <code>interface</code>, not <code>interface(ISomeAncestor)</code>). When an interface has an ancestor, it has the same type as the ancestor, regardless of the <code>{$interfaces xxx}</code> declaration.</p>
+</div>
+</dd>
+<dt class="hdlist1">What are COM interfaces?</dt>
+<dd>
+<p>The <em>COM interface</em> is synonymous with <em>an interface descending from a special <code>IUnknown</code> interface</em>. Descending from <code>IUnknown</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Requires that your classes define the <code>_AddRef</code> and <code>_ReleaseRef</code> methods. Proper implementation of these methods can manage the lifetime of your objects using the reference-counting.</p>
+</li>
+<li>
+<p>Adds the <code>QueryInterface</code> method.</p>
+</li>
+<li>
+<p>Allows to interact with the <em>COM (Component Object Model) technology</em>.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">What do you advice to not use the COM interfaces?</dt>
+<dd>
+<p>The additional features brought by the COM interfaces are rather problematic in my view. Don&#8217;t get me wrong&#8201;&#8212;&#8201;the idea of reference-counting is very nice. But entangling these features with interfaces (instead of making them orthogonal features) is very unclean in my eyes. It definitely doesn&#8217;t match my use cases.</p>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Sometimes I want to cast my (otherwise unrelated) classes to a common interface.</p>
+</li>
+<li>
+<p>Sometimes I want to manage memory using the reference counting approach.</p>
+</li>
+<li>
+<p><em>Maybe</em> some day I will want to interact with the <em>COM technology</em>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>But these are all separate, unrelated needs. Entangling them in a single language feature is counter-useful in my experience. And it does cause actual problems: the reference-counting mechanism of COM, even when disabled by a special <code>_AddRef</code> and <code>_ReleaseRef</code> implementation, is still troublesome. You still need to be careful to never have a temporary interface reference hanging, after you have freed the class instance. More details about it in the next section.</p>
+</div>
+<div class="paragraph">
+<p>That is why I advice to use <em>CORBA</em> style interfaces, and the <code>{$interfaces corba}</code> directive, in all modern code dealing with interfaces. The <em>COM</em> interfaces are somewhat an <em>embarrassment to the language</em>, in my eyes.</p>
+</div>
+<div class="paragraph">
+<p>To be fair, the <em>COM interfaces</em> are presented in more details in the next section anyway.</p>
+</div>
+</dd>
+<dt class="hdlist1">Can we have reference-counting with CORBA interfaces?</dt>
+<dd>
+<p>Yeah. Just add <code>_AddRef</code> / <code>_ReleaseRef</code> methods. There&#8217;s no need to descend from the <code>IUnknown</code> interface. Although in most cases, if you want reference-counting with your interfaces, you may as well just use COM interfaces.</p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugly_com_interfaces">9.2. Ugly (COM) interfaces</h3>
+<h3 id="_interfaces_guids">9.3. Interfaces GUIDs</h3>
+<div class="paragraph">
+<p>GUIDs are the seemingly random characters <code>['{ABCD1234-&#8230;&#8203;}']</code> that you see placed at every interface definition. Yes, they are just random. Unfortunately, they are necessary.</p>
+</div>
+<div class="paragraph">
+<p>They have no meaning (if you don&#8217;t plan on integrating with communication technologies like <em>COM</em> nor <em>CORBA</em>). But they are necessary, for implementation reasons. Don&#8217;t be fooled by the compiler, that unfortunately allows you to declare interfaces without GUIDs.</p>
+</div>
+<div class="paragraph">
+<p>Without the (unique) GUIDs, your interfaces will be treated equal by the <code>is</code> operator. In effect, it will return <code>true</code> if your class supports <em>any</em> of your interfaces. The magic function <code>Supports(ObjectInstance, IMyInterface)</code> behaves slightly better here, as it refuses to be compiled for interfaces without a GUID. This is true for both CORBA and COM interfaces, as of FPC 3.0.0.</p>
+</div>
+<div class="paragraph">
+<p>So, to be on the safe side, you should always declare a GUID for your interface. You can use <em>Lazarus</em> GUID generator (<code>Ctrl + Shift + G</code> shortcut in the editor). Or you can use an online service like <a href="https://www.guidgenerator.com/" class="bare">https://www.guidgenerator.com/</a> .</p>
+</div>
+<div class="paragraph">
+<p>Or you can write your own tool for this, using the <code>CreateGUID</code> and <code>GUIDToString</code> functions in RTL. See the example below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils;
+<span class="keyword">var</span>
+  MyGuid: TGUID;
+<span class="keyword">begin</span>
+  Randomize;
+  CreateGUID(MyGuid);
+  Writeln(<span class="char"><span class="delimiter">'</span><span class="content">[</span><span class="delimiter">'</span></span><span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span> + GUIDToString(MyGuid) + <span class="string"><span class="delimiter">'</span><span class="char">''</span><span class="content">]</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ugly_com_interfaces">9.4. Ugly (COM) interfaces</h3>
 <div class="paragraph">
 <p>The <em>COM interfaces</em> bring two additional features:</p>
 </div>
@@ -3432,9 +3548,6 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 </div>
 <div class="ulist">
 <ul>
-<li>
-<p>You need to declare a GUID at your COM interfaces, to make the <code>Supports(ObjectInstance, IMyInterface)</code> or <code>ObjectInstance is IMyInterface</code> work. Just use <em>Lazarus</em> GUID generator (<code>Ctrl + Shift + G</code> shortcut in the editor).</p>
-</li>
 <li>
 <p>Your class needs to implement a magic <code>_AddRef</code>, <code>_Release</code>, and <code>QueryInterface</code> methods. Or descend from something that already implements them. A particular implementation of these methods may actually enable or disable the <em>reference-counting</em> feature of COM interfaces (although disabling it is somewhat dangerous&#8201;&#8212;&#8201;see the next point).</p>
 <div class="ulist">
@@ -3547,7 +3660,7 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_com_interfaces_with_reference_counting_disabled">9.3. Using COM interfaces with reference-counting disabled</h3>
+<h3 id="_using_com_interfaces_with_reference_counting_disabled">9.5. Using COM interfaces with reference-counting disabled</h3>
 <div class="paragraph">
 <p>As mentioned in the previous section, your class can descend from <code>TComponent</code> (or a similar class like <code>TNonRefCountedInterfacedObject</code> and <code>TNonRefCountedInterfacedPersistent</code>) which disables reference-counting for COM interfaces. This allows you to use COM interfaces, and still free the class instance manually.</p>
 </div>
@@ -3635,7 +3748,7 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_typecasting_interfaces_without_as_operator">9.4. Typecasting interfaces without "as" operator</h3>
+<h3 id="_typecasting_interfaces_without_as_operator">9.6. Typecasting interfaces without "as" operator</h3>
 <div class="paragraph">
 <p>This section applies to both <em>CORBA</em> and <em>COM</em> interfaces.</p>
 </div>
@@ -3711,7 +3824,7 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-16 00:25:45 îrodkowoeuropejski czas letni
+Last updated 2016-12-20 13:54:30 îrodkowoeuropejski czas stand.
 </div>
 </div>
 <!-- Google analytics -->
