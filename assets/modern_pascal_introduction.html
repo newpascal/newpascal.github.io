@@ -1281,8 +1281,6 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 
 <span class="keyword">uses</span> MyUnit;
 
-<span class="keyword">var</span>
-  X: Single;
 <span class="keyword">begin</span>
   Writeln(MyFunction(<span class="string"><span class="delimiter">'</span><span class="content">Note: </span><span class="delimiter">'</span></span>));
   MyProcedure(<span class="integer">5</span>);
@@ -2202,10 +2200,40 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
 <div class="sect2">
 <h3 id="_cloning_tpersistent_assign">6.3. Cloning: TPersistent.Assign</h3>
 <div class="paragraph">
-<p>To allow copying a class instance, the standard approach is to derive your class from <code>TPersistent</code>, and override it&#8217;s <code>Assign</code> method. There is no magic copying here, you need to implement the <code>Assign</code> to actually copy the fields you want.</p>
+<p>Copying the class instances by a simple assignment operator copies the <strong>reference</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">var</span>
+  X, Y: TMyObject;
+<span class="keyword">begin</span>
+  X := TMyObject.Create;
+  Y := X;
+  <span class="comment">// X and Y are now two pointers to the same data</span>
+  Y.MyField := <span class="integer">123</span>; <span class="comment">// this also changes X.MyField</span>
+  FreeAndNil(X);
+<span class="keyword">end</span>;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>You should carefully implement the <code>Assign</code> method, to copy from a class that may be a descendant of the current class.</p>
+<p>To copy the <strong>class instance contents</strong>, the standard approach is to derive your class from <code>TPersistent</code>, and override it&#8217;s <code>Assign</code> method. Once it&#8217;s implemented properly in <code>TMyObject</code>, you use it like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">var</span>
+  X, Y: TMyObject;
+<span class="keyword">begin</span>
+  X := TMyObject.Create;
+  Y := TMyObject.Create;
+  Y.Assign(X);
+  Y.MyField := <span class="integer">123</span>; <span class="comment">// this does not change X.MyField</span>
+  FreeAndNil(X);
+  FreeAndNil(Y);
+<span class="keyword">end</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To make it work, you need to implement the <code>Assign</code> method to actually copy the fields you want. You should carefully implement the <code>Assign</code> method, to copy from a class that may be a descendant of the current class.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2235,7 +2263,9 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
     MyInt := SourceMyClass.MyInt;
     <span class="comment">// Xxx := SourceMyClass.Xxx; // add new fields here</span>
   <span class="keyword">end</span> <span class="keyword">else</span>
-    <span class="comment">{ call inherited ONLY when you cannot handle Source class }</span>
+    <span class="comment">{ Since TMyClass is a direct TPersistent descendant,
+      it calls inherited ONLY when it cannot handle Source class.
+      See comments below. }</span>
     <span class="keyword">inherited</span> Assign(Source);
 <span class="keyword">end</span>;
 
@@ -2250,8 +2280,10 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
     <span class="comment">// Xxx := SourceMyClassDescendant.Xxx; // add new fields here</span>
   <span class="keyword">end</span>;
 
-  <span class="comment">{ call inherited ALWAYS, to allow TMyClass.Assign to handle
-    remaining fields. }</span>
+  <span class="comment">{ Since TMyClassDescendant has an ancestor that already overrides
+    Assign (in TMyClass.Assign), it calls inherited ALWAYS,
+    to allow TMyClass.Assign to handle remaining fields.
+    See comments below for a detailed reasoning. }</span>
   <span class="keyword">inherited</span> Assign(Source);
 <span class="keyword">end</span>;
 
@@ -2287,10 +2319,85 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
 </div>
 </div>
 <div class="paragraph">
-<p>Sometimes it&#8217;s more comfortable to alternatively override the <code>AssignTo</code> method in the source class, instead of overriding the <code>Assign</code> method in the target class.</p>
+<p>Sometimes it&#8217;s more comfortable to alternatively override the <code>AssignTo</code> method in the source class, instead of overriding the <code>Assign</code> method in the destination class.</p>
 </div>
 <div class="paragraph">
-<p>Be careful when calling <code>inherited</code> in the <code>Assign</code> implementation. You should <em>call inherited <code>TPersistent.Assign</code> only if you cannot handle the assignment in your code</em> (this allows the <code>AssignTo</code> method to work, or otherwise raise an exception when assignment cannot be done). On the other hand, if your class descends from another class that already implements the <code>Assign</code> method, then <em>always call the inherited <code>TMyClass.Assign</code></em>. See the example above.</p>
+<p>Be careful when you call <code>inherited</code> in the overridden <code>Assign</code> implementation. There are two situations:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Your class is a direct descendant of the <code>TPersistent</code> class. (Or, it&#8217;s not a direct descendant of <code>TPersistent</code>, but no ancestor has overridden the <code>Assign</code> method.)</dt>
+<dd>
+<p>In this case, your class should use the <code>inherited</code> keyword (to call the <code>TPersistent.Assign</code>) <em>only if you cannot handle the assignment in your code</em>.</p>
+</dd>
+<dt class="hdlist1">Your class descends from some class that has already overridden the <code>Assign</code> method.</dt>
+<dd>
+<p>In this case, your class should <em>always</em> use the <code>inherited</code> keyword (to call the ancestor <code>Assign</code>). In general, calling <code>inherited</code> in overridden methods is <em>usually</em> a good idea.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>To understand the need when to call (or not to call) <code>inherited</code> from the <code>Assign</code> implementation, and how it relates to the <code>AssignTo</code> method, it&#8217;s best to look at the <code>TPersistent.Assign</code> and <code>TPersistent.AssignTo</code> implementations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">procedure</span> TPersistent.Assign(Source: TPersistent);
+<span class="keyword">begin</span>
+  <span class="keyword">if</span> Source &lt;&gt; <span class="keyword">nil</span> <span class="keyword">then</span>
+    Source.AssignTo(Self)
+  <span class="keyword">else</span>
+    <span class="keyword">raise</span> EConvertError...
+end;
+
+<span class="keyword">procedure</span> TPersistent.AssignTo(Destination: TPersistent);
+<span class="keyword">begin</span>
+  <span class="keyword">raise</span> EConvertError...
+end;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This is not the <strong>exact</strong> implementation of <code>TPersistent</code>, I simplified it to hide the boring details about how the exception message is build.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The conclusions you can get from the above are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>If neither <code>Assign</code> nor <code>AssignTo</code> are overridden</em>, then calling them will result in an exception.</p>
+</li>
+<li>
+<p>Also, note that there is <em>no</em> code in <code>TPersistent</code> implementation that automatically copies all the fields (or all the published fields) of the classes. That&#8217;s why you need to do that yourself, by overriding <code>Assign</code> in all the classes. You can use RTTI (runtime type information) for that, but for simple cases you will probably just list the fields to be copied manually.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you have a class like <code>TApple</code>, your <code>TApple.Assign</code> implementation usually deals with copying fields that are specific to the <code>TApple</code> class (not to the <code>TApple</code> ancestor, like <code>TFruit</code>). So, the <code>TApple.Assign</code> implementation usually checks whether <code>Source is TApple</code> at the beginning, before copying apple-related fields. Then, it calls <code>inherited</code> to allow <code>TFruit</code> to handle the rest of the fields.</p>
+</div>
+<div class="paragraph">
+<p>Assuming that you implemented <code>TFruit.Assign</code> and <code>TApple.Assign</code> following the standard pattern (as shown in the example above), the effect is like this:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you pass <code>TApple</code> instance to <code>TApple.Assign</code>, it will work and copy all the fields.</p>
+</li>
+<li>
+<p>If you pass <code>TOrange</code> instance to <code>TApple.Assign</code>, it will work and only copy the common fields shared by both <code>TOrange</code> and <code>TApple</code>. In other words, the fields defined at <code>TFruit</code>.</p>
+</li>
+<li>
+<p>If you pass <code>TWerewolf</code> instance to <code>TApple.Assign</code>, it will raise an exception (because <code>TApple.Assign</code> will call <code>TFruit.Assign</code> which will call <code>TPersistent.Assign</code> which raises an exception).</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3824,7 +3931,7 @@ you create <em>COM interfaces</em>. This can be stated explicitly by saying <cod
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-20 13:54:30 îrodkowoeuropejski czas stand.
+Last updated 2017-02-28 23:22:57
 </div>
 </div>
 <!-- Google analytics -->
