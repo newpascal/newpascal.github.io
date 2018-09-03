@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <meta name="author" content="Michalis Kamburelis and contributors: Maciej Izak">
-<title>Quick Modern Object Pascal for Programmers</title>
+<title>Modern Object Pascal Introduction for Programmers</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -18,7 +18,6 @@ audio:not([controls]){display:none;height:0}
 [hidden],template{display:none}
 script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
-body{margin:0}
 a{background:transparent}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
@@ -53,7 +52,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -65,7 +64,6 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
-body{-webkit-font-smoothing:antialiased}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
@@ -120,13 +118,16 @@ table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
-body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
 .clearfix:after,.float-group:after{clear:both}
-*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
 kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
@@ -511,7 +512,7 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Quick Modern Object Pascal for Programmers</h1>
+<h1>Modern Object Pascal Introduction for Programmers</h1>
 <div class="details">
 <span id="author" class="author">Michalis Kamburelis and contributors: Maciej Izak</span><br>
 </div>
@@ -547,6 +548,9 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_exceptions">4.4. Exceptions</a></li>
 <li><a href="#_visibility_specifiers">4.5. Visibility specifiers</a></li>
 <li><a href="#_default_ancestor">4.6. Default ancestor</a></li>
+<li><a href="#_self">4.7. Self</a></li>
+<li><a href="#_calling_inherited_method">4.8. Calling inherited method</a></li>
+<li><a href="#virtual-methods-section">4.9. Virtual methods, override and reintroduce</a></li>
 </ul>
 </li>
 <li><a href="#_freeing_classes">5. Freeing classes</a>
@@ -554,13 +558,14 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_remember_to_free_the_class_instances">5.1. Remember to free the class instances</a></li>
 <li><a href="#_how_to_free">5.2. How to free</a></li>
 <li><a href="#_manual_and_automatic_freeing">5.3. Manual and automatic freeing</a></li>
-<li><a href="#_free_notification">5.4. Free notification</a></li>
+<li><a href="#_the_virtual_destructor_called_destroy">5.4. The virtual destructor called Destroy</a></li>
+<li><a href="#_free_notification">5.5. Free notification</a></li>
 </ul>
 </li>
 <li><a href="#_run_time_library">6. Run-time library</a>
 <ul class="sectlevel2">
 <li><a href="#_input_output_using_streams">6.1. Input/output using streams</a></li>
-<li><a href="#_lists">6.2. Lists</a></li>
+<li><a href="#generic-containers-section">6.2. Containers (lists, dictionaries) using generics</a></li>
 <li><a href="#_cloning_tpersistent_assign">6.3. Cloning: TPersistent.Assign</a></li>
 </ul>
 </li>
@@ -580,20 +585,24 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_advanced_classes_features">8. Advanced classes features</a>
 <ul class="sectlevel2">
 <li><a href="#_private_and_strict_private">8.1. private and strict private</a></li>
-<li><a href="#_class_methods">8.2. Class methods</a></li>
-<li><a href="#_more_stuff_inside_classes_and_nested_classes">8.3. More stuff inside classes and nested classes</a></li>
+<li><a href="#_more_stuff_inside_classes_and_nested_classes">8.2. More stuff inside classes and nested classes</a></li>
+<li><a href="#_class_methods">8.3. Class methods</a></li>
 <li><a href="#_class_references">8.4. Class references</a></li>
-<li><a href="#_class_helpers">8.5. Class helpers</a></li>
-<li><a href="#_virtual_constructors_destructors">8.6. Virtual constructors, destructors</a></li>
-<li><a href="#_an_exception_in_constructor">8.7. An exception in constructor</a></li>
+<li><a href="#_static_class_methods">8.5. Static class methods</a></li>
+<li><a href="#_class_properties_and_variables">8.6. Class properties and variables</a></li>
+<li><a href="#_class_helpers">8.7. Class helpers</a></li>
+<li><a href="#_virtual_constructors_destructors">8.8. Virtual constructors, destructors</a></li>
+<li><a href="#_an_exception_in_constructor">8.9. An exception in constructor</a></li>
 </ul>
 </li>
 <li><a href="#_interfaces">9. Interfaces</a>
 <ul class="sectlevel2">
-<li><a href="#_good_corba_interfaces">9.1. Good (CORBA) interfaces</a></li>
-<li><a href="#_ugly_com_interfaces">9.2. Ugly (COM) interfaces</a></li>
-<li><a href="#_using_com_interfaces_with_reference_counting_disabled">9.3. Using COM interfaces with reference-counting disabled</a></li>
-<li><a href="#_typecasting_interfaces_without_as_operator">9.4. Typecasting interfaces without "as" operator</a></li>
+<li><a href="#_bare_corba_interfaces">9.1. Bare (CORBA) interfaces</a></li>
+<li><a href="#_corba_and_com_types_of_interfaces">9.2. CORBA and COM types of interfaces</a></li>
+<li><a href="#_interfaces_guids">9.3. Interfaces GUIDs</a></li>
+<li><a href="#_reference_counted_com_interfaces">9.4. Reference-counted (COM) interfaces</a></li>
+<li><a href="#_using_com_interfaces_with_reference_counting_disabled">9.5. Using COM interfaces with reference-counting disabled</a></li>
+<li><a href="#_typecasting_interfaces_without_as_operator">9.6. Typecasting interfaces without "as" operator</a></li>
 </ul>
 </li>
 <li><a href="#_about_this_document">10. About this document</a></li>
@@ -639,7 +648,7 @@ This is a modified version of the original document from Michalis, because we (a
 </ul>
 </div>
 <div class="paragraph">
-<p>It also has excellent, portable and open-source compiler called the <em>Free Pascal Compiler</em>, <a href="http://freepascal.org/" class="bare">http://freepascal.org/</a> . And an accompanying IDE (editor, debugger, a library of visual components, form designer) called <em>Lazarus</em> <a href="http://lazarus.freepascal.org/" class="bare">http://lazarus.freepascal.org/</a> . Myself, I&#8217;m the creator of <em>Castle Game Engine</em>, <a href="http://castle-engine.sourceforge.net/" class="bare">http://castle-engine.sourceforge.net/</a> , which is a cool portable 3D and 2D game engine using this language to create games on many platforms (Windows, Linux, MacOSX, Android, iOS, web plugin).</p>
+<p>It also has excellent, portable and open-source compiler called the <em>Free Pascal Compiler</em>, <a href="http://freepascal.org/" class="bare">http://freepascal.org/</a> . And an accompanying IDE (editor, debugger, a library of visual components, form designer) called <em>Lazarus</em> <a href="http://lazarus.freepascal.org/" class="bare">http://lazarus.freepascal.org/</a> . Myself, I&#8217;m the creator of <em>Castle Game Engine</em>, <a href="https://castle-engine.io/" class="bare">https://castle-engine.io/</a> , which is a cool portable 3D and 2D game engine using this language to create games on many platforms (Windows, Linux, MacOSX, Android, iOS, web plugin).</p>
 </div>
 <div class="paragraph">
 <p>This introduction is mostly directed at programmers who already have experience in other languages. We will not cover here the meanings of some universal concepts, like <em>"what is a class"</em>, we&#8217;ll only show how to do them in Pascal.</p>
@@ -873,7 +882,7 @@ Voila&#8201;&#8212;&#8201;a working GUI application, cross-platform, with native
 <p>And if <code>MyFunction(X)</code> returns <code>false</code>, then the value of expression is known (the value of <code>false and whatever</code> is always <code>false</code>), and <code>MyOtherFunction(Y)</code> will not be executed at all.</p>
 </li>
 <li>
-<p>Analogous rule is for <code>or</code> expression. There, if the expression is known to be <code>true</code> (because the 1st operand if <code>true</code>), the 2nd operand is not evaluated.</p>
+<p>Analogous rule is for <code>or</code> expression. There, if the expression is known to be <code>true</code> (because the 1st operand is <code>true</code>), the 2nd operand is not evaluated.</p>
 </li>
 <li>
 <p>This is particularly useful when writing expressions like</p>
@@ -1038,21 +1047,39 @@ You can avoid placing enum names in the global namespace by directive <code>{$sc
 </div>
 </div>
 <div class="paragraph">
-<p>Various notes:</p>
+<p><strong>About the <code>repeat</code> and <code>while</code> loops</strong>:</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="paragraph">
+<p>There are two differences between these loop types:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>It may seem that the difference between the <code>while</code> and <code>repeat</code> loops is "cosmetic" (you specify a negated condition, because in <code>while .. do</code> you tell it <em>when to continue</em>, but in <code>repeat .. until</code> you tell it <em>when to stop</em>). Actually there&#8217;s another important difference: in case of <code>repeat</code>, <em>the condition is not checked at the beginning</em>. So the <code>repeat</code> loop always runs at least once.</p>
+<p>The loop condition has an opposite meaning. In <code>while .. do</code> you tell it <em>when to continue</em>, but in <code>repeat .. until</code> you tell it <em>when to stop</em>.</p>
 </li>
 <li>
+<p>In case of <code>repeat</code>, <em>the condition is not checked at the beginning</em>. So the <code>repeat</code> loop always runs at least once.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>About the <code>for I := &#8230;&#8203;</code> loops</strong>:</p>
+</div>
+<div class="paragraph">
 <p>The <code>for I := .. to .. do &#8230;&#8203;</code> construction it similar to the C-like <code>for</code> loop. However, it&#8217;s more constrained, as you cannot specify arbitrary actions/tests to control the loop iteration. This is strictly for iterating over a consecutive numbers (or other ordinal types). The only flexibility you have is that you can use <code>downto</code> instead of <code>to</code>, to make numbers go downward.</p>
+</div>
 <div class="paragraph">
 <p>In exchange, it looks clean, and is very optimized in execution. In particular, <em>the expressions for the lower and higher bound are only calculated once</em>, before the loop starts.</p>
 </div>
-</li>
-<li>
+<div class="paragraph">
+<p>Note that the value of the loop counter variable (<code>I</code> in this example) should be considered <em>undefined</em> after the loop has finished, due to possible optimizations. Accessing the value of <code>I</code> after the loop may cause a compiler warning. <em>Unless</em> you exit the loop prematurely by <code>Break</code> or <code>Exit</code>: in such case, the counter variable is guaranteed to retain the last value.</p>
+</div>
+<div class="paragraph">
+<p><strong>About the <code>for I in &#8230;&#8203;</code> loops</strong>:</p>
+</div>
+<div class="paragraph">
 <p>The <code>for I in .. do ..</code> is similar to <code>foreach</code> construct in many modern languages. It works intelligently on many built-in types:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -1065,7 +1092,7 @@ You can avoid placing enum names in the global namespace by directive <code>{$sc
 <pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">var</span>
   AK: TAnimalKind;
 <span class="keyword">begin</span>
-  <span class="keyword">for</span> AnimalKind <span class="keyword">in</span> TAnimalKind <span class="keyword">do</span>...</code></pre>
+  <span class="keyword">for</span> AK <span class="keyword">in</span> TAnimalKind <span class="keyword">do</span>...</code></pre>
 </div>
 </div>
 </li>
@@ -1075,7 +1102,7 @@ You can avoid placing enum names in the global namespace by directive <code>{$sc
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">var</span>
   Animals: TAnimals;
-  AK: AnimalKind;
+  AK: TAnimalKind;
 <span class="keyword">begin</span>
   Animals := [akDog, akCat];
   <span class="keyword">for</span> AK <span class="keyword">in</span> Animals <span class="keyword">do</span> ...</code></pre>
@@ -1122,9 +1149,6 @@ You can avoid placing enum names in the global namespace by directive <code>{$sc
 </li>
 </ul>
 </div>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_output_logging">2.8. Output, logging</h3>
@@ -1132,7 +1156,7 @@ You can avoid placing enum names in the global namespace by directive <code>{$sc
 <p>To simply output strings in Pascal, use the <code>Write</code> or <code>Writeln</code> routine. The latter automatically adds a newline at the end.</p>
 </div>
 <div class="paragraph">
-<p>This is a "magic" routine in Pascal. It takes a variable number of arguments and they can have any type. They are all converted to strings when displaying, with some special syntax for specifying padding and number precision.</p>
+<p>This is a "magic" routine in Pascal. It takes a variable number of arguments and they can have any type. They are all converted to strings when displaying, with a special syntax to specify padding and number precision.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1143,7 +1167,7 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 </div>
 </div>
 <div class="paragraph">
-<p>To explicitly use newline in string, use the <code>LineEnding</code> constant (FPC RTL) (the <em>Castle Game Engine</em> has also a shorter <code>NL</code> constant). Pascal strings do not interpret any special backslash sequences, so writing</p>
+<p>To explicitly use newline in the string, use the <code>LineEnding</code> constant (from FPC RTL). (The <em>Castle Game Engine</em> defines also a shorter <code>NL</code> constant.) Pascal strings do not interpret any special backslash sequences, so writing</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1171,13 +1195,13 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 <p>Note that this will only work in <em>console</em> applications. Make sure you have <code>{$apptype CONSOLE}</code> (and <strong>not</strong> <code>{$apptype GUI}</code>) defined in your main program file. On some operating systems it actually doesn&#8217;t matter and will work always (Unix), but on some operating systems trying to write something from a GUI application is an error (Windows).</p>
 </div>
 <div class="paragraph">
-<p><strong>In the Castle Game Engine:</strong> use <code>WritelnLog</code> or <code>WritelnWarning</code>, never <code>Writeln</code>. They will be always directed to some useful output. On Unix, standard output. On Windows GUI application, log file. On Android, the <em>Android logging facility</em> (visible when you use <code>adb logcat</code>).</p>
+<p><strong>In the Castle Game Engine:</strong> use <code>WritelnLog</code> or <code>WritelnWarning</code>, never <code>Writeln</code>, to print debug information. They will be always directed to some useful output. On Unix, standard output. On Windows GUI application, log file. On Android, the <em>Android logging facility</em> (visible when you use <code>adb logcat</code>). The use of <code>Writeln</code> should be limited to the cases when you write a command-line application (like a 3D model converter / generator) and you know that the <em>standard output</em> is available.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_converting_to_a_string">2.9. Converting to a string</h3>
 <div class="paragraph">
-<p>If you&#8217;re looking for a way to convert an arbitrary number of arguments to a string (instead of just directly outputting them), you have a couple of options.</p>
+<p>To convert an arbitrary number of arguments to a string (instead of just directly outputting them), you have a couple of options.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1189,7 +1213,7 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 <p><em>Advantage</em>: Absolutely flexible. There are many <code>XxxToStr</code> overloaded versions and friends (like <code>FormatFloat</code>), covering many types.</p>
 </li>
 <li>
-<p><em>Another advantage</em>: Consistent with the reverse functions. To convert a string (for example, user input) back to an integer or float, you use <code>StrToInt</code>, <code>StrToFloat</code> or friends (like <code>StrToIntDef</code>).</p>
+<p><em>Another advantage</em>: Consistent with the reverse functions. To convert a string (for example, user input) back to an integer or float, you use <code>StrToInt</code>, <code>StrToFloat</code> and friends (like <code>StrToIntDef</code>).</p>
 </li>
 <li>
 <p><em>Disadvantage</em>: A long concatenation of many <code>XxxToStr</code> calls and strings doesn&#8217;t look nice.</p>
@@ -1208,7 +1232,7 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 <p><em>Another advantage</em>: No compiler magic. You can use the same syntax to pass any number of arguments of an arbitrary type in your own routines (declare parameter as an <code>array of const</code>). You can then pass these arguments downward to <code>Format</code>, or deconstruct the list of parameters and do anything you like with them.</p>
 </li>
 <li>
-<p><em>Disadvantage</em>: Compiler does not check whether the pattern matches the arguments. Using a wrong placeholder type will result in an exception at runtime (<code>EConversionError</code> exception, not anything nasty like a segmentation fault).</p>
+<p><em>Disadvantage</em>: Compiler does not check whether the pattern matches the arguments. Using a wrong placeholder type will result in an exception at runtime (<code>EConvertError</code> exception, not anything nasty like a segmentation fault).</p>
 </li>
 </ul>
 </div>
@@ -1275,8 +1299,6 @@ Writeln(<span class="string"><span class="delimiter">'</span><span class="conten
 
 <span class="keyword">uses</span> MyUnit;
 
-<span class="keyword">var</span>
-  X: Single;
 <span class="keyword">begin</span>
   Writeln(MyFunction(<span class="string"><span class="delimiter">'</span><span class="content">Note: </span><span class="delimiter">'</span></span>));
   MyProcedure(<span class="integer">5</span>);
@@ -1382,7 +1404,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 </div>
 </div>
 <div class="paragraph">
-<p>The unit <code>Graphics</code> (from Lazarus LCL) defines the <code>TColor</code> type. But the compiler will fail to compile the above unit, claiming that you don&#8217;t implement a procedure <code>ShowColor</code> that matches the interface declaration. The problem is that unit <code>GoogleMapsEngine</code> also defines a <code>TColor</code> type. And it is used only in the <code>implementation</code> section, therefore it <em>shadows</em> the <code>TColor</code> definition only in the implementation. The equivalent version of above unit, where the error is obvious, looks like this:</p>
+<p>The unit <code>Graphics</code> (from Lazarus LCL) defines the <code>TColor</code> type. But the compiler will fail to compile the above unit, claiming that you don&#8217;t implement a procedure <code>ShowColor</code> that matches the interface declaration. The problem is that unit <code>GoogleMapsEngine</code> also defines a <code>TColor</code> type. And it is used only in the <code>implementation</code> section, therefore it <em>shadows</em> the <code>TColor</code> definition only in the implementation. The equivalent version of the above unit, where the error is obvious, looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1390,7 +1412,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <span class="keyword">unit</span> UnitUsingColors;
 
 <span class="comment">// INCORRECT example.</span>
-<span class="comment">// This is what compiler &quot;sees&quot; when trying to compile previous example</span>
+<span class="comment">// This is what the compiler &quot;sees&quot; when trying to compile previous example</span>
 
 <span class="keyword">interface</span>
 
@@ -1440,7 +1462,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <div class="sect2">
 <h3 id="_exposing_one_unit_identifiers_from_another">3.3. Exposing one unit identifiers from another</h3>
 <div class="paragraph">
-<p>Sometimes you need to take an identifier from a used unit, and <em>expose</em> it from your new unit. The end result should be that using the new unit should make the identifier available in the namespace.</p>
+<p>Sometimes you want to take an identifier from one unit, and <em>expose</em> it in a new unit. The end result should be that using the new unit will make the identifier available in the namespace.</p>
 </div>
 <div class="paragraph">
 <p>Sometimes this is necessary to preserve backward compatibility with previous unit versions. Sometimes it&#8217;s nice to "hide" an internal unit this way.</p>
@@ -1508,7 +1530,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <p>and <em>properties</em> (which is a fancy syntax for something that looks like a field, but is in fact a pair of methods to <em>get</em> and <em>set</em> something; more in <a href="#_properties">Properties</a>).</p>
 </li>
 <li>
-<p>Actually, you can put <a href="#_more_stuff_inside_classes_and_nested_classes">More stuff inside classes and nested classes</a>, more about this in later section.</p>
+<p>Actually, there are more possibilities, described in <a href="#_more_stuff_inside_classes_and_nested_classes">More stuff inside classes and nested classes</a>.</p>
 </li>
 </ul>
 </div>
@@ -1646,7 +1668,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Make something that looks like a field (can be read and set) but underneath is realized by calling a <em>getter</em> and a <em>setter</em> function. A most typical usage is to perform some side-effect each time some value changes.</p>
+<p>Make something that looks like a field (can be read and set) but underneath is realized by calling a <em>getter</em> and <em>setter</em> methods. The typical usage is to perform some side-effect (e.g. redraw the screen) each time some value changes.</p>
 </li>
 <li>
 <p>Make something that looks like a field, but is read-only. In effect, it&#8217;s like a constant or a parameter-less function.</p>
@@ -1692,6 +1714,9 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 </div>
 </div>
 <div class="paragraph">
+<p>Note that instead of specifying a method, you can also specify a field (typically a private field) to directly get or set. In the example above, the <code>Color</code> property uses a <em>setter</em> method <code>SetColor</code>. But for getting the value, the <code>Color</code> property refers directly to the private field <code>FColor</code>. Directly referring to a field is faster than implementing trivial getter or setter methods (faster for you, and faster at execution).</p>
+</div>
+<div class="paragraph">
 <p>When declaring a property you specify:</p>
 </div>
 <div class="olist arabic">
@@ -1722,7 +1747,7 @@ In such cases, the last unit on the <code>uses</code> clause "wins", which means
 <p>The <em>setter</em> function should always set the requested value, such that calling the <em>getter</em> yields it back. Do not reject invalid values silently in the "setter" (raise an exception if you must). Do not convert or scale the requested value. The idea is that after <code>MyClass.MyProperty := 123;</code> the programmer can expect that <code>MyClass.MyProperty = 123</code>.</p>
 </li>
 <li>
-<p>The <em>read-only properties</em> are often used to make some field read-only from the outside. Again, the good convention is to make it behave like a constant, at least constant for this object instance, at least constant for this object instance with this state. The value of the property should not change unexpectedly. Make it a function, not a property, if reading it has a side effect or returns something random.</p>
+<p>The <em>read-only properties</em> are often used to make some field read-only from the outside. Again, the good convention is to make it behave like a constant, at least constant for this object instance with this state. The value of the property should not change unexpectedly. <em>Make it a function, not a property, if using it has a side effect or returns something random.</em></p>
 </li>
 <li>
 <p>The <em>"backing" field of a property is almost always private</em>, since the idea of a property is to encapsulate all outside access to it.</p>
@@ -1808,7 +1833,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 </dl>
 </div>
 <div class="paragraph">
-<p>The explanation of <code>private</code> and <code>protected</code> visibility above is not precisely true. The code <em>in the same unit</em> can overcome their limits, and access the <code>private</code> and <code>protected</code> stuff freely. Sometimes this is a nice feature, allows you to implement tightly-connected classes. Use <code>strict private</code> or <code>strict protected</code> to secure your classes more tightly. See <a href="#_private_and_strict_private">private and strict private</a> section.</p>
+<p>The explanation of <code>private</code> and <code>protected</code> visibility above is not precisely true. The code <em>in the same unit</em> can overcome their limits, and access the <code>private</code> and <code>protected</code> stuff freely. Sometimes this is a nice feature, allows you to implement tightly-connected classes. Use <code>strict private</code> or <code>strict protected</code> to secure your classes more tightly. See the <a href="#_private_and_strict_private">private and strict private</a>.</p>
 </div>
 <div class="paragraph">
 <p>By default, if you don&#8217;t specify the visibility, then the visibility of declared stuff is <code>public</code>. The exception is for classes compiled with <code>{$M+}</code>, or descendants of classes compiled with <code>{$M+}</code>, which includes all descendants of <code>TPersistent</code>, which also includes all descendants of <code>TComponent</code> (since <code>TComponent</code> descends from <code>TPersistent</code>). For them, the default visibility specifier is <code>published</code>, which is like <code>public</code>, but in addition the streaming system knows to handle this.</p>
@@ -1823,6 +1848,334 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 <p>If you don&#8217;t declare the ancestor type, every <code>class</code> inherits from <code>TObject</code>.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_self">4.7. Self</h3>
+<div class="paragraph">
+<p>The special keyword <code>Self</code> can be used within the class implementation to explicitly refer to your own instance. It is equivalent to <code>this</code> from C++, Java and similar languages.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_calling_inherited_method">4.8. Calling inherited method</h3>
+<div class="paragraph">
+<p>Within a method implementation, if you call another method, then by default you call the method of your own class. In the example code below, <code>TMyClass2.MyOtherMethod</code> calls <code>MyMethod</code>, which ends up calling <code>TMyClass2.MyMethod</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils;
+
+<span class="keyword">type</span>
+  TMyClass1 = <span class="keyword">class</span>
+    <span class="keyword">procedure</span> MyMethod;
+  <span class="keyword">end</span>;
+
+  TMyClass2 = <span class="keyword">class</span>(TMyClass1)
+    <span class="keyword">procedure</span> MyMethod;
+    <span class="keyword">procedure</span> MyOtherMethod;
+  <span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TMyClass1.MyMethod;
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass1.MyMethod</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TMyClass2.MyMethod;
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass2.MyMethod</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TMyClass2.MyOtherMethod;
+<span class="keyword">begin</span>
+  MyMethod; <span class="comment">// this calls TMyClass2.MyMethod</span>
+<span class="keyword">end</span>;
+
+<span class="keyword">var</span>
+  C: TMyClass2;
+<span class="keyword">begin</span>
+  C := TMyClass2.Create;
+  <span class="keyword">try</span>
+    C.MyOtherMethod;
+  <span class="keyword">finally</span> FreeAndNil(C) <span class="keyword">end</span>;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the method is not defined in a given class, then it calls the method of an ancestor class. In effect, when you call <code>MyMethod</code> on an instance of <code>TMyClass2</code>, then</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The compiler looks for <code>TMyClass2.MyMethod</code>.</p>
+</li>
+<li>
+<p>If not found, it looks for <code>TMyClass1.MyMethod</code>.</p>
+</li>
+<li>
+<p>If not found, it looks for <code>TObject.MyMethod</code>.</p>
+</li>
+<li>
+<p>if not found, then the compilation fails.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can test it by commenting out the <code>TMyClass2.MyMethod</code> definition in the example above. In effect, <code>TMyClass1.MyMethod</code> will be called by <code>TMyClass2.MyOtherMethod</code>.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes, you don&#8217;t want to call the method of your own class. You want to call the method of an ancestor (or ancestor&#8217;s ancestor, and so on). To do this, add the keyword <code>inherited</code> before the call to <code>MyMethod</code>, like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">inherited</span> MyMethod;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This way you <em>force</em> the compiler to start searching from an ancestor class. In our example, it means that compiler is searching for <code>MyMethod</code> inside <code>TMyClass1.MyMethod</code>, then <code>TObject.MyMethod</code>, and then gives up. It does not even consider using the implementation of <code>TMyClass2.MyMethod</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Go ahead, change the implementation of <code>TMyClass2.MyOtherMethod</code> above to use <code>inherited MyMethod</code>, and see the difference in the output.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>inherited</code> call is often used to call the ancestor method of the same name. This way the descendants can enhance the ancestors (keeping the ancestor functionality, instead of replacing the ancestor functionality). Like in the example below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils;
+
+<span class="keyword">type</span>
+  TMyClass1 = <span class="keyword">class</span>
+    <span class="keyword">constructor</span> Create;
+    <span class="keyword">procedure</span> MyMethod(<span class="keyword">const</span> A: Integer);
+  <span class="keyword">end</span>;
+
+  TMyClass2 = <span class="keyword">class</span>(TMyClass1)
+    <span class="keyword">constructor</span> Create;
+    <span class="keyword">procedure</span> MyMethod(<span class="keyword">const</span> A: Integer);
+  <span class="keyword">end</span>;
+
+<span class="keyword">constructor</span> TMyClass1.Create;
+<span class="keyword">begin</span>
+  <span class="keyword">inherited</span> Create; <span class="comment">// this calls TObject.Create</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass1.Create</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TMyClass1.MyMethod(<span class="keyword">const</span> A: Integer);
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass1.MyMethod </span><span class="delimiter">'</span></span>, A);
+<span class="keyword">end</span>;
+
+<span class="keyword">constructor</span> TMyClass2.Create;
+<span class="keyword">begin</span>
+  <span class="keyword">inherited</span> Create; <span class="comment">// this calls TMyClass1.Create</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass2.Create</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TMyClass2.MyMethod(<span class="keyword">const</span> A: Integer);
+<span class="keyword">begin</span>
+  <span class="keyword">inherited</span> MyMethod(A); <span class="comment">// this calls TMyClass1.MyMethod</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass2.MyMethod </span><span class="delimiter">'</span></span>, A);
+<span class="keyword">end</span>;
+
+<span class="keyword">var</span>
+  C: TMyClass2;
+<span class="keyword">begin</span>
+  C := TMyClass2.Create;
+  <span class="keyword">try</span>
+    C.MyMethod(<span class="integer">123</span>);
+  <span class="keyword">finally</span> FreeAndNil(C) <span class="keyword">end</span>;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since using <code>inherited</code> to call a method with the same name, with the same arguments, is a very often case, there is a special shortcut for it: you can just write <code>inherited;</code> (<code>inherited</code> keyword followed immediately by a semicolon, instead of a method name). This means "<em>call an inherited method with the same name, passing it the same arguments as the current method</em>".</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+In the above example, all the <code>inherited &#8230;&#8203;;</code> calls could be replaced by a simple <code>inherited;</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note 1: The <code>inherited;</code> is really just a shortcut for calling the ancestor&#8217;s method with the <em>same variables passed in</em>. If you have modified your own parameter (which is possible, if the parameter is not <code>const</code>), then the ancestor&#8217;s method can receive different input values from your descendant. Consider this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">procedure</span> TMyClass2.MyMethod(A: Integer);
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass2.MyMethod beginning </span><span class="delimiter">'</span></span>, A);
+  A := <span class="integer">456</span>;
+  <span class="comment">{ This calls TMyClass1.MyMethod with A = 456,
+    regardless of the A value passed to this method (TMyClass2.MyMethod). }</span>
+  <span class="keyword">inherited</span>;
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass2.MyMethod ending </span><span class="delimiter">'</span></span>, A);
+<span class="keyword">end</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note 2: You usually want to make the <code>MyMethod</code> <em>virtual</em> when many classes (along the "<em>inheritance chain</em>") define it. More about the virtual methods in the section below. But the <code>inherited</code> keyword works regardless if the method is virtual or not. The <code>inherited</code> always means that the compiler starts searching for the method in an ancestor, and it makes sense for both <em>virtual</em> and <em>not virtual</em> methods.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtual-methods-section">4.9. Virtual methods, override and reintroduce</h3>
+<div class="paragraph">
+<p>By default, the methods are <em>not virtual</em>. This is similar to C++, and unlike Java.</p>
+</div>
+<div class="paragraph">
+<p>When a method is <em>not virtual</em>, the compiler determines which method to call based on the currently <em>declared</em> class type, not based on the <em>actually created</em> class type. The difference seems subtle, but it&#8217;s important when your variable is declared to have a class like <code>TFruit</code>, but it may be in fact a descendant class like <code>TApple</code>.</p>
+</div>
+<div class="paragraph">
+<p>The idea of the object-oriented programming is that <em>the descendant class is always as good as the ancestor</em>, so the compiler allows to use a descendant class always when the ancestor is expected. When your method is not virtual, this can have undesired consequences. Consider the example below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils;
+
+<span class="keyword">type</span>
+  TFruit = <span class="keyword">class</span>
+    <span class="keyword">procedure</span> Eat;
+  <span class="keyword">end</span>;
+
+  TApple = <span class="keyword">class</span>(TFruit)
+    <span class="keyword">procedure</span> Eat;
+  <span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TFruit.Eat;
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Eating a fruit</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TApple.Eat;
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Eating an apple</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> DoSomethingWithAFruit(<span class="keyword">const</span> Fruit: TFruit);
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">We have a fruit with class </span><span class="delimiter">'</span></span>, Fruit.ClassName);
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">We eat it:</span><span class="delimiter">'</span></span>);
+  Fruit.Eat;
+<span class="keyword">end</span>;
+
+<span class="keyword">var</span>
+  Apple: TApple; <span class="comment">// Note: you could as well declare &quot;Apple: TFruit&quot; here</span>
+<span class="keyword">begin</span>
+  Apple := TApple.Create;
+  <span class="keyword">try</span>
+    DoSomethingWithAFruit(Apple);
+  <span class="keyword">finally</span> FreeAndNil(Apple) <span class="keyword">end</span>;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example will print</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>We have a fruit with class TApple
+We eat it:
+Eating a fruit</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In effect, the call <code>Fruit.Eat</code> called the <code>TFruit.Eat</code> implementation, and nothing calls the <code>TApple.Eat</code> implementation.</p>
+</div>
+<div class="paragraph">
+<p>If you think about how the compiler works, this is natural: when you wrote the <code>Fruit.Eat</code>, the <code>Fruit</code> variable was declared to hold a class <code>TFruit</code>. So the compiler was searching for the method called <code>Eat</code> within the <code>TFruit</code> class. If the <code>TFruit</code> class would not contain such method, the compiler would search within an ancestor (<code>TObject</code> in this case). But the compiler <em>cannot search within descendants (like <code>TApple</code>)</em>, as it doesn&#8217;t know whether the <em>actual class</em> of <code>Fruit</code> is <code>TApple</code>, <code>TFruit</code>, or some other <code>TFruit</code> descendant (like a <code>TOrange</code>, not shown in the example above).</p>
+</div>
+<div class="paragraph">
+<p>In other words, the <em>method to be called</em> is determined <em>at compile-time</em>.</p>
+</div>
+<div class="paragraph">
+<p>Using the <em>virtual methods</em> changes this behavior. <strong>If the <code>Eat</code> method would be virtual</strong> (an example of it is shown below), then the actual implementation to be called is determined <em>at runtime</em>. If the <code>Fruit</code> variable will hold an instance of the class <code>TApple</code> (even if it&#8217;s declared as <code>TFruit</code>), then the <code>Eat</code> method will be searched within the <code>TApple</code> class first.</p>
+</div>
+<div class="paragraph">
+<p>In Object Pascal, to define a method as <em>virtual</em>, you need to</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mark it&#8217;s first definition (in the top-most ancestor) with the <code>virtual</code> keyword.</p>
+</li>
+<li>
+<p>Mark all the other definitions (in the descendants) with the <code>override</code> keyword. All the overridden versions must have exactly the same parameters (and return the same types, in case of functions).</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils;
+
+<span class="keyword">type</span>
+  TFruit = <span class="keyword">class</span>
+    <span class="keyword">procedure</span> Eat; <span class="directive">virtual</span>;
+  <span class="keyword">end</span>;
+
+  TApple = <span class="keyword">class</span>(TFruit)
+    <span class="keyword">procedure</span> Eat; <span class="directive">override</span>;
+  <span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TFruit.Eat;
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Eating a fruit</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> TApple.Eat;
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Eating an apple</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>;
+
+<span class="keyword">procedure</span> DoSomethingWithAFruit(<span class="keyword">const</span> Fruit: TFruit);
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">We have a fruit with class </span><span class="delimiter">'</span></span>, Fruit.ClassName);
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">We eat it:</span><span class="delimiter">'</span></span>);
+  Fruit.Eat;
+<span class="keyword">end</span>;
+
+<span class="keyword">var</span>
+  Apple: TApple; <span class="comment">// Note: you could as well declare &quot;Apple: TFruit&quot; here</span>
+<span class="keyword">begin</span>
+  Apple := TApple.Create;
+  <span class="keyword">try</span>
+    DoSomethingWithAFruit(Apple);
+  <span class="keyword">finally</span> FreeAndNil(Apple) <span class="keyword">end</span>;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example will print</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>We have a fruit with class TApple
+We eat it:
+Eating an apple</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Internally, virtual methods work by having so-called <em>virtual method table</em> associated with each class. This table is a list of pointers to the implementations of virtual methods for this class. When calling the <code>Eat</code> method, the compiler looks into a virtual method table associated with the actual class of <code>Fruit</code>, and uses a pointer to the <code>Eat</code> implementation stored there.</p>
+</div>
+<div class="paragraph">
+<p>If you don&#8217;t use the <code>override</code> keyword, the compiler will warn you that you&#8217;re <em>hiding</em> (obscuring) the virtual method of an ancestor with a non-virtual definition. If you&#8217;re sure that this is what you want, you can add a <code>reintroduce</code> keyword. But in most cases, you will rather want to keep the method virtual, and add the <code>override</code> keyword, thus making sure that it&#8217;s always invoked correctly.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1831,7 +2184,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 <div class="sect2">
 <h3 id="_remember_to_free_the_class_instances">5.1. Remember to free the class instances</h3>
 <div class="paragraph">
-<p>The class instances have to be manually freed, otherwise you get memory leaks. I advice using FPC <code>-gl -gh</code> options to detect memory leaks (see <a href="http://castle-engine.sourceforge.net/tutorial_optimization.php#section_memory" class="bare">http://castle-engine.sourceforge.net/tutorial_optimization.php#section_memory</a> ).</p>
+<p>The class instances have to be manually freed, otherwise you get memory leaks. I advice using FPC <code>-gl -gh</code> options to detect memory leaks (see <a href="https://castle-engine.io/manual_optimization.php#section_memory" class="bare">https://castle-engine.io/manual_optimization.php#section_memory</a> ).</p>
 </div>
 <div class="paragraph">
 <p>Note that this doesn&#8217;t concern raised exceptions. Although you do create a class when raising an exception (and it&#8217;s a perfectly normal class, and you can create your own classes for this purpose too). But this class instance is freed automatically.</p>
@@ -1879,7 +2232,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 <div class="sect2">
 <h3 id="_manual_and_automatic_freeing">5.3. Manual and automatic freeing</h3>
 <div class="paragraph">
-<p>In many situations, the need to free the instance is not much problem. You just write a destructor, that matches a constructor, and deallocates everything that was allocated in constructor (or, more completely, in the whole lifetime of the class). Be careful to only free each thing <strong>once</strong>. Usually it&#8217;s a good idea to set the freed reference to <code>nil</code>, usually it&#8217;s most comfortable to do it by calling the <code>FreeAndNil(A)</code>.</p>
+<p>In many situations, the need to free the instance is not much problem. You just write a destructor, that matches a constructor, and deallocates everything that was allocated in the constructor (or, more completely, in the whole lifetime of the class). Be careful to only free each thing <strong>once</strong>. Usually it&#8217;s a good idea to set the freed reference to <code>nil</code>, usually it&#8217;s most comfortable to do it by calling the <code>FreeAndNil(A)</code>.</p>
 </div>
 <div class="paragraph">
 <p>So, like this:</p>
@@ -1914,7 +2267,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 </div>
 </div>
 <div class="paragraph">
-<p>To avoid the need to explicitly free the instance, one can also use the <code>TComponent</code> feature of <em>"ownership"</em>. An object that is owned will be automatically freed by the owner. It&#8217;s automatically taken care of to not free an already freed instance this way (so things will also work correctly if you manually free the owned object earlier). We can change the previous example to this:</p>
+<p>To avoid the need to explicitly free the instance, one can also use the <code>TComponent</code> feature of <em>"ownership"</em>. An object that is <em>owned</em> will be automatically freed by the <em>owner</em>. The mechanism is smart and it will never free an already freed instance (so things will also work correctly if you manually free the owned object earlier). We can change the previous example to this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1985,7 +2338,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 
     Alternatively, we could avoid declaring Gun1 and Gun2,
     and instead use Guns[0] and Guns[1] in own code.
-    Or create a function like Gun1 that returns Guns[0]. }</span>
+    Or create a method like Gun1 that returns Guns[0]. }</span>
   Gun1 := <span class="keyword">nil</span>;
   Gun2 := <span class="keyword">nil</span>;
   <span class="keyword">inherited</span>;
@@ -2000,12 +2353,50 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_free_notification">5.4. Free notification</h3>
+<h3 id="_the_virtual_destructor_called_destroy">5.4. The virtual destructor called Destroy</h3>
+<div class="paragraph">
+<p>As you saw in the examples above, when the class is destroyed, it&#8217;s <code>destructor</code> called <code>Destroy</code> is called.</p>
+</div>
+<div class="paragraph">
+<p>In theory, you could have multiple destructors, but in practice it&#8217;s almost never a good idea. It&#8217;s much easier to have only one destructor called <code>Destroy</code>, which is in turn called by the <code>Free</code> method, which is in turn called by the <code>FreeAndNil</code> procedure.</p>
+</div>
+<div class="paragraph">
+<p>The <code>Destroy</code> destructor in the <code>TObject</code> is defined as a <em>virtual</em> method, so you should always mark it with the <code>override</code> keyword in all your classes (since all classes descend from <code>TObject</code>). This makes the <code>Free</code> method work correctly. Recall how the virtual methods work from the <a href="#virtual-methods-section">Virtual methods, override and reintroduce</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This information about <em>destructors</em> is, indeed, inconsistent with the <em>constructors</em>.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s normal that a class has multiple constructors. Usually they are all called <code>Create</code>, and only have different parameters, but it&#8217;s also OK to invent other names for constructors.</p>
+</div>
+<div class="paragraph">
+<p>Also, the <code>Create</code> constructor in the <code>TObject</code> is <em>not virtual</em>, so you do not mark it with <code>override</code> in the descendants.</p>
+</div>
+<div class="paragraph">
+<p>This all gives you a bit of extra flexibility when defining constructors. It is often not necessary to make them virtual, so by default you&#8217;re not forced to do it.</p>
+</div>
+<div class="paragraph">
+<p>Note, however, that this changes for <code>TComponent</code> descendants. The <code>TComponent</code> defines a virtual constructor <code>Create(AOwner: TComponent)</code>. It needs a virtual constructor in order for the streaming system to work. When defining descendants of the <code>TComponent</code>, you should override this constructor (and mark it with the <code>override</code> keyword), and perform all your initialization inside it. It is still OK to define additional constructors, but they should only act as <em>"helpers"</em>. The instance should always work when created using the <code>Create(AOwner: TComponent)</code> constructor, otherwise it will not be correctly constructed when streaming. The <em>streaming</em> is used e.g. when saving and loading this component on a Lazarus form.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_free_notification">5.5. Free notification</h3>
 <div class="paragraph">
 <p>If you copy a reference to the instance, such that you have two references to the same memory, and then one of them is freed&#8201;&#8212;&#8201;the other one becomes a <em>"dangling pointer"</em>. It should not be accessed, as it points to a memory that is no longer allocated. Accessing it may result in a runtime error, or garbage being returned (as the memory may be reused for other stuff in your program).</p>
 </div>
 <div class="paragraph">
-<p>Using the <code>FreeAndNil</code> to free the instance doesn&#8217;t help here. <code>FreeAndNil</code> sets to <code>nil</code> only the reference it got&#8201;&#8212;&#8201;there&#8217;s no way for it to set all other references.</p>
+<p>Using the <code>FreeAndNil</code> to free the instance doesn&#8217;t help here. <code>FreeAndNil</code> sets to <code>nil</code> only the reference it got&#8201;&#8212;&#8201;there&#8217;s no way for it to set all other references. Consider this code:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2016,23 +2407,32 @@ Properties can also be defined outside of class, at a unit level. They serve an 
   O2 := O1;
   FreeAndNil(O1);
 
-  <span class="comment">{ Now O1 is nil. If some code may access it, it can use
-    &quot;if O1 &lt;&gt; nil ...&quot; to avoid calling methods on a freed instance,
-    like
-
-      if O1 &lt;&gt; nil then Writeln(O1.ClassName);
-
-    Trying to access a field of a nil instance (or call a method
-    that accessed a field of a nil instance) results in a predictable
-    exception at runtime. }</span>
-
-  <span class="comment">{ With O2, things are more difficult. It's not nil, but it's invalid.
-    Trying to access a field of a non-nil invalid instance (or call a method
-    that accessed a field of such instance) results in an unpredictable
-    behavior - maybe an access violation exception, maybe a garbage data
-    returned. }</span>
+  <span class="comment">// what happens if we access O1 or O2 here?</span>
 <span class="keyword">end</span>;</code></pre>
 </div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>At the end of this block, the <code>O1</code> is <code>nil</code>. If some code has to access it, it can reliably use <code>if O1 &lt;&gt; nil &#8230;&#8203;</code> to avoid calling methods on a freed instance, like</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">if</span> O1 &lt;&gt; <span class="keyword">nil</span> <span class="keyword">then</span>
+  Writeln(O1.ClassName);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Trying to access a field of a <code>nil</code> instance results in a predictable exception at runtime. So even if some code will not check <code>O1 &lt;&gt; nil</code>, and will blindly access <code>O1</code> field, you will get a clear exception at runtime.</p>
+</div>
+<div class="paragraph">
+<p>Same goes for calling a virtual method, or calling a non-virtual method that accessed a field of a <code>nil</code> instance.</p>
+</div>
+</li>
+<li>
+<p>With <code>O2</code>, things are less predictable. It&#8217;s not <code>nil</code>, but it&#8217;s invalid. Trying to access a field of a non-nil invalid instance
+results in an unpredictable behavior&#8201;&#8212;&#8201;maybe an access violation exception, maybe a garbage data returned.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>There are various solutions to it:</p>
@@ -2040,10 +2440,13 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 <div class="ulist">
 <ul>
 <li>
-<p>One solution is to, well, be careful. Don&#8217;t assume anything about the lifetime of the reference, if it&#8217;s created by other code. If a class <code>TCar</code> has a field pointing to some instance of <code>TWheel</code>, it&#8217;s a <em>convention</em> that the reference to <em>wheel</em> is valid as long as the reference to <em>car</em> exists, and the <em>car</em> will free it&#8217;s <em>wheels</em> inside it&#8217;s destructor. But that&#8217;s just a convention, the documentation should mention if there&#8217;s something more complicated going on.</p>
+<p>One solution is to, well, be careful and read the documentation. Don&#8217;t assume anything about the lifetime of the reference, if it&#8217;s created by other code. If a class <code>TCar</code> has a field pointing to some instance of <code>TWheel</code>, it&#8217;s a <em>convention</em> that the reference to <em>wheel</em> is valid as long as the reference to <em>car</em> exists, and the <em>car</em> will free it&#8217;s <em>wheels</em> inside it&#8217;s destructor. But that&#8217;s just a convention, the documentation should mention if there&#8217;s something more complicated going on.</p>
 </li>
 <li>
-<p>The other solution is to use <code>TComponent</code> class "free notification" mechanism. One component can be notified when another component is freed, and thus set it&#8217;s reference to <code>nil</code>.</p>
+<p>In the above example, right after freeing the <code>O1</code> instance, you can simply set the <code>O2</code> variable explicitly to <code>nil</code>. That&#8217;s trivial in this simple case.</p>
+</li>
+<li>
+<p>The most future-proof solution is to use <code>TComponent</code> class "free notification" mechanism. One component can be notified when another component is freed, and thus set it&#8217;s reference to <code>nil</code>.</p>
 <div class="paragraph">
 <p>Thus you get something like a <em>weak reference</em>. It can cope with various usage scenarios, for example you can let the code from outside of the class to set your reference, and the outside code can also free the instance at anytime.</p>
 </div>
@@ -2145,7 +2548,7 @@ Properties can also be defined outside of class, at a unit level. They serve an 
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="pascal">EnableNetwork := true;
-S := Download(<span class="string"><span class="delimiter">'</span><span class="content">http://castle-engine.sourceforge.net</span><span class="delimiter">'</span></span>);</code></pre>
+S := Download(<span class="string"><span class="delimiter">'</span><span class="content">https://castle-engine.io/latest.zip</span><span class="delimiter">'</span></span>);</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -2159,7 +2562,7 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
 </div>
 </div>
 <div class="paragraph">
-<p>To read text files, I advice using <code>TTextReader</code> class from <code>CastleClassUtils</code>. It provides a line-oriented API, and wraps a <code>TStream</code> inside. The <code>TTextReader</code> constructor can take a ready URL, or you can pass there your custom <code>TStream</code> source.</p>
+<p>To read text files, we advice using the <code>TTextReader</code> class. It provides a line-oriented API, and wraps a <code>TStream</code> inside. The <code>TTextReader</code> constructor can take a ready URL, or you can pass there your custom <code>TStream</code> source.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2170,21 +2573,310 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lists">6.2. Lists</h3>
+<h3 id="generic-containers-section">6.2. Containers (lists, dictionaries) using generics</h3>
 <div class="paragraph">
-<p>For dynamic-length lists of stuff, I advice using generic classes from the <code>FGL</code> unit. Use <code>TFPGList</code> for lists of primitives (or records or old-style objects), <code>TFPGObjectList</code> for a list of class instances. <strong>In the Castle Game Engine:</strong> You can also use <code>CastleGenericLists</code> with <code>TGenericStructList</code> for a list of records or old-style objects, this workarounds the problem of impossibility to override their operators in older FPC versions.</p>
+<p>The language and run-time library offer various flexible containers. There are a number of non-generic classes (like <code>TList</code> and <code>TObjectList</code> from the <code>Contnrs</code> unit), there are also dynamic arrays (<code>array of TMyType</code>). But to get the most flexibility <strong>and</strong> type-safety, I advice using <strong>generic containers</strong> for most of your needs.</p>
 </div>
 <div class="paragraph">
-<p>Using these lists is a good idea, as you get type-safety, and their API is rich (there are methods to find, sort, iterate and so on). We discourage using <em>dynamic arrays</em> (<code>array of X</code>, <code>SetLength(X, &#8230;&#8203;)</code>) as their API is poor (you can only use <code>SetLength</code> and your own type helpers). We discourage using <code>TList</code> or <code>TObjectList</code> as it will require casting your references from <code>TObject</code> to your type.</p>
+<p>The <em>generic containers</em> give you a lot of helpful methods to add, remove, iterate, search, sort&#8230;&#8203; The compiler also knows (and checks) that the container holds only items of the appropriate type.</p>
+</div>
+<div class="paragraph">
+<p>There are three libraries providing generics containers in FPC now:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>FGL</code> unit</p>
+</li>
+<li>
+<p><code>Generics.Collections</code> unit and friends</p>
+</li>
+<li>
+<p><code>GVector</code> unit and friends (together in <code>fcl-stl</code>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We advice using the <code>FGL</code> unit (if you need to work with the stable FPC 3.0.x or even older FPC 2.6.x), or the <code>Generics.Collections</code> unit (only available since FPC 3.1.1, but on the other hand compatible with Delphi). They both offer lists and dictionaries with naming consistent with other parts of the standard library (like the non-generic containers from the <code>Contnrs</code> unit).</p>
+</div>
+<div class="paragraph">
+<p><strong>In the Castle Game Engine</strong>: We include a local copy of <code>Generics.Collections</code> even for FPC 3.0.x. We use the <code>Generics.Collections</code> throughout the engine, and advice you to use <code>Generics.Collections</code> too!</p>
+</div>
+<div class="paragraph">
+<p>Most important classes from the <code>Generics.Collections</code> unit are:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">TList</dt>
+<dd>
+<p>A generic list of types.</p>
+</dd>
+<dt class="hdlist1">TObjectList</dt>
+<dd>
+<p>A generic list of object instances. It can "own" children, which means that it will free them automatically.</p>
+</dd>
+<dt class="hdlist1">TDictionary</dt>
+<dd>
+<p>A generic dictionary.</p>
+</dd>
+<dt class="hdlist1">TObjectDictionary</dt>
+<dd>
+<p>A generic dictionary, that can "own" the keys and/or values.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s how to you use a simple generic <code>TObjectList</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils, Generics.Collections;
+
+<span class="keyword">type</span>
+  TApple = <span class="keyword">class</span>
+    Name: <span class="keyword">string</span>;
+  <span class="keyword">end</span>;
+
+  TAppleList = TObjectList&lt;TApple&gt;;
+
+<span class="keyword">var</span>
+  A: TApple;
+  Apples: TAppleList;
+<span class="keyword">begin</span>
+  Apples := TAppleList.Create(true);
+  <span class="keyword">try</span>
+    A := TApple.Create;
+    A.Name := <span class="string"><span class="delimiter">'</span><span class="content">my apple</span><span class="delimiter">'</span></span>;
+    Apples.Add(A);
+
+    A := TApple.Create;
+    A.Name := <span class="string"><span class="delimiter">'</span><span class="content">another apple</span><span class="delimiter">'</span></span>;
+    Apples.Add(A);
+
+    Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Count: </span><span class="delimiter">'</span></span>, Apples.Count);
+    Writeln(Apples[<span class="integer">0</span>].Name);
+    Writeln(Apples[<span class="integer">1</span>].Name);
+  <span class="keyword">finally</span> FreeAndNil(Apples) <span class="keyword">end</span>;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that some operations require comparing two items, like sorting and searching (e.g. by <code>Sort</code> and <code>IndexOf</code> methods). The <code>Generics.Collections</code> containers use for this a <em>comparer</em>. The <em>default comparer</em> is reasonable for all types, even for records (in which case it compares memory contents, which is a reasonable default at least for searching using <code>IndexOf</code>).</p>
+</div>
+<div class="paragraph">
+<p>When sorting the list you can provide a <em>custom comparer</em> as a parameter. The <em>comparer</em> is a class implementing the <code>IComparer</code> interface. In practice, you usually define the appropriate callback, and use <code>TComparer&lt;T&gt;.Construct</code> method to wrap this callback into an <code>IComparer</code> instance. An example of doing this is below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils, Generics.Defaults, Generics.Collections;
+
+<span class="keyword">type</span>
+  TApple = <span class="keyword">class</span>
+    Name: <span class="keyword">string</span>;
+  <span class="keyword">end</span>;
+
+  TAppleList = TObjectList&lt;TApple&gt;;
+
+<span class="keyword">function</span> CompareApples(constref Left, Right: TApple): Integer;
+<span class="keyword">begin</span>
+  Result := AnsiCompareStr(Left.Name, Right.Name);
+<span class="keyword">end</span>;
+
+<span class="keyword">type</span>
+  TAppleComparer = TComparer&lt;TApple&gt;;
+<span class="keyword">var</span>
+  A: TApple;
+  L: TAppleList;
+<span class="keyword">begin</span>
+  L := TAppleList.Create(true);
+  <span class="keyword">try</span>
+    A := TApple.Create;
+    A.Name := <span class="string"><span class="delimiter">'</span><span class="content">11</span><span class="delimiter">'</span></span>;
+    L.Add(A);
+
+    A := TApple.Create;
+    A.Name := <span class="string"><span class="delimiter">'</span><span class="content">33</span><span class="delimiter">'</span></span>;
+    L.Add(A);
+
+    A := TApple.Create;
+    A.Name := <span class="string"><span class="delimiter">'</span><span class="content">22</span><span class="delimiter">'</span></span>;
+    L.Add(A);
+
+    L.Sort(TAppleComparer.Construct(@CompareApples));
+
+    Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Count: </span><span class="delimiter">'</span></span>, L.Count);
+    Writeln(L[<span class="integer">0</span>].Name);
+    Writeln(L[<span class="integer">1</span>].Name);
+    Writeln(L[<span class="integer">2</span>].Name);
+  <span class="keyword">finally</span> FreeAndNil(L) <span class="keyword">end</span>;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>TDictionary</code> class implements a <strong>dictionary</strong>, also known as a <strong>map (key &#8594; value)</strong>, also known as an <strong>associative array</strong>. It&#8217;s API is a bit similar to the C# <code>TDictionary</code> class. It has useful iterators for keys, values, and pairs of key&#8594;value.</p>
+</div>
+<div class="paragraph">
+<p>An example code using a dictionary:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils, Generics.Collections;
+
+<span class="keyword">type</span>
+  TApple = <span class="keyword">class</span>
+    Name: <span class="keyword">string</span>;
+  <span class="keyword">end</span>;
+
+  TAppleDictionary = TDictionary&lt;<span class="keyword">string</span>, TApple&gt;;
+
+<span class="keyword">var</span>
+  Apples: TAppleDictionary;
+  A, FoundA: TApple;
+  ApplePair: TAppleDictionary.TDictionaryPair;
+  AppleKey: <span class="keyword">string</span>;
+<span class="keyword">begin</span>
+  Apples := TAppleDictionary.Create;
+  <span class="keyword">try</span>
+    A := TApple.Create;
+    A.Name := <span class="string"><span class="delimiter">'</span><span class="content">my apple</span><span class="delimiter">'</span></span>;
+    Apples.AddOrSetValue(<span class="string"><span class="delimiter">'</span><span class="content">apple key 1</span><span class="delimiter">'</span></span>, A);
+
+    <span class="keyword">if</span> Apples.TryGetValue(<span class="string"><span class="delimiter">'</span><span class="content">apple key 1</span><span class="delimiter">'</span></span>, FoundA) <span class="keyword">then</span>
+      Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Found apple under key &quot;apple key 1&quot; with name: </span><span class="delimiter">'</span></span> +
+        FoundA.Name);
+
+    <span class="keyword">for</span> AppleKey <span class="keyword">in</span> Apples.Keys <span class="keyword">do</span>
+      Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Found apple key: </span><span class="delimiter">'</span></span> + AppleKey);
+    <span class="keyword">for</span> A <span class="keyword">in</span> Apples.Values <span class="keyword">do</span>
+      Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Found apple value: </span><span class="delimiter">'</span></span> + A.Name);
+    <span class="keyword">for</span> ApplePair <span class="keyword">in</span> Apples <span class="keyword">do</span>
+      Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Found apple key-&gt;value: </span><span class="delimiter">'</span></span> +
+        ApplePair.Key + <span class="string"><span class="delimiter">'</span><span class="content">-&gt;</span><span class="delimiter">'</span></span> + ApplePair.Value.Name);
+
+    <span class="comment">{ Line below works too, but it can only be used to set
+      an *existing* dictionary key.
+      Instead of this, usually use AddOrSetValue
+      to set or add a new key, as necessary. }</span>
+    <span class="comment">// Apples['apple key 1'] := ... ;</span>
+
+    Apples.Remove(<span class="string"><span class="delimiter">'</span><span class="content">apple key 1</span><span class="delimiter">'</span></span>);
+
+    <span class="comment">{ Note that the TDictionary doesn't own the items,
+      you need to free them yourself.
+      We could use TObjectDictionary to have automatic ownership
+      mechanism. }</span>
+    A.Free;
+  <span class="keyword">finally</span> FreeAndNil(Apples) <span class="keyword">end</span>;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>TObjectDictionary</code> can additionally <em>own</em> the dictionary keys and/or values, which means that they will be automatically freed. Be careful to <em>only own keys and/or values if they are object instances</em>. If you set to <em>"owned"</em> some other type, like an <code>Integer</code> (for example, if your keys are <code>Integer</code>, and you include <code>doOwnsKeys</code>), you will get a nasty crash when the code executes.</p>
+</div>
+<div class="paragraph">
+<p>An example code using the <code>TObjectDictionary</code> is below. Compile this example with <em>memory leak detection</em>, like <code>fpc -gl -gh generics_object_dictionary.lpr</code>, to see that everything is freed when program exits.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils, Generics.Collections;
+
+<span class="keyword">type</span>
+  TApple = <span class="keyword">class</span>
+    Name: <span class="keyword">string</span>;
+  <span class="keyword">end</span>;
+
+  TAppleDictionary = TObjectDictionary&lt;<span class="keyword">string</span>, TApple&gt;;
+
+<span class="keyword">var</span>
+  Apples: TAppleDictionary;
+  A: TApple;
+  ApplePair: TAppleDictionary.TDictionaryPair;
+<span class="keyword">begin</span>
+  Apples := TAppleDictionary.Create([doOwnsValues]);
+  <span class="keyword">try</span>
+    A := TApple.Create;
+    A.Name := <span class="string"><span class="delimiter">'</span><span class="content">my apple</span><span class="delimiter">'</span></span>;
+    Apples.AddOrSetValue(<span class="string"><span class="delimiter">'</span><span class="content">apple key 1</span><span class="delimiter">'</span></span>, A);
+
+    <span class="keyword">for</span> ApplePair <span class="keyword">in</span> Apples <span class="keyword">do</span>
+      Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Found apple key-&gt;value: </span><span class="delimiter">'</span></span> +
+        ApplePair.Key + <span class="string"><span class="delimiter">'</span><span class="content">-&gt;</span><span class="delimiter">'</span></span> + ApplePair.Value.Name);
+
+    Apples.Remove(<span class="string"><span class="delimiter">'</span><span class="content">apple key 1</span><span class="delimiter">'</span></span>);
+  <span class="keyword">finally</span> FreeAndNil(Apples) <span class="keyword">end</span>;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you prefer using the <code>FGL</code> unit instead of <code>Generics.Collections</code>, here is a short overview of the most important classes from the <code>FGL</code> unit:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">TFPGList</dt>
+<dd>
+<p>A generic list of types.</p>
+</dd>
+<dt class="hdlist1">TFPGObjectList</dt>
+<dd>
+<p>A generic list of object instances. It can "own" children.</p>
+</dd>
+<dt class="hdlist1">TFPGMap</dt>
+<dd>
+<p>A generic dictionary.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>In <code>FGL</code> unit, the <code>TFPGList</code> can be only used for types for which the equality operator (=) is defined. For <code>TFPGMap</code> the <em>"greater than"</em> (&gt;) and <em>"less than"</em> (&lt;) operators must be defined for the key type. If you want to use these lists with types that don&#8217;t have built-in comparison operators (e.g. with records), you have to overload their operators as shown in the <a href="#_operator_overloading">Operator overloading</a>.</p>
+</div>
+<div class="paragraph">
+<p><strong>In the Castle Game Engine</strong> we include a unit <code>CastleGenericLists</code> that adds <code>TGenericStructList</code> and <code>TGenericStructMap</code> classes. They are similar to <code>TFPGList</code> and <code>TFPGMap</code>, but they do not require a definition of the comparison operators for the appropriate type (instead, they compare memory contents, which is often appropriate for records or method pointers). But the <code>CastleGenericLists</code> unit is deprecated since the engine version 6.3, as we advice using <code>Generics.Collections</code> instead.</p>
+</div>
+<div class="paragraph">
+<p>If you want to know more about the generics, see <a href="#_generics">Generics</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_cloning_tpersistent_assign">6.3. Cloning: TPersistent.Assign</h3>
 <div class="paragraph">
-<p>To allow copying a class instance, the standard approach is to derive your class from <code>TPersistent</code>, and override it&#8217;s <code>Assign</code> method. There is no magic copying here, you need to implement the <code>Assign</code> to actually copy the fields you want.</p>
+<p>Copying the class instances by a simple assignment operator copies the <strong>reference</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">var</span>
+  X, Y: TMyObject;
+<span class="keyword">begin</span>
+  X := TMyObject.Create;
+  Y := X;
+  <span class="comment">// X and Y are now two pointers to the same data</span>
+  Y.MyField := <span class="integer">123</span>; <span class="comment">// this also changes X.MyField</span>
+  FreeAndNil(X);
+<span class="keyword">end</span>;</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>You should carefully implement the <code>Assign</code> method, to copy from a class that may be a descendant of the current class.</p>
+<p>To copy the <strong>class instance contents</strong>, the standard approach is to derive your class from <code>TPersistent</code>, and override it&#8217;s <code>Assign</code> method. Once it&#8217;s implemented properly in <code>TMyObject</code>, you use it like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">var</span>
+  X, Y: TMyObject;
+<span class="keyword">begin</span>
+  X := TMyObject.Create;
+  Y := TMyObject.Create;
+  Y.Assign(X);
+  Y.MyField := <span class="integer">123</span>; <span class="comment">// this does not change X.MyField</span>
+  FreeAndNil(X);
+  FreeAndNil(Y);
+<span class="keyword">end</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To make it work, you need to implement the <code>Assign</code> method to actually copy the fields you want. You should carefully implement the <code>Assign</code> method, to copy from a class that may be a descendant of the current class.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2214,7 +2906,9 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
     MyInt := SourceMyClass.MyInt;
     <span class="comment">// Xxx := SourceMyClass.Xxx; // add new fields here</span>
   <span class="keyword">end</span> <span class="keyword">else</span>
-    <span class="comment">{ call inherited ONLY when you cannot handle Source class }</span>
+    <span class="comment">{ Since TMyClass is a direct TPersistent descendant,
+      it calls inherited ONLY when it cannot handle Source class.
+      See comments below. }</span>
     <span class="keyword">inherited</span> Assign(Source);
 <span class="keyword">end</span>;
 
@@ -2229,8 +2923,10 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
     <span class="comment">// Xxx := SourceMyClassDescendant.Xxx; // add new fields here</span>
   <span class="keyword">end</span>;
 
-  <span class="comment">{ call inherited ALWAYS, to allow TMyClass.Assign to handle
-    remaining fields. }</span>
+  <span class="comment">{ Since TMyClassDescendant has an ancestor that already overrides
+    Assign (in TMyClass.Assign), it calls inherited ALWAYS,
+    to allow TMyClass.Assign to handle remaining fields.
+    See comments below for a detailed reasoning. }</span>
   <span class="keyword">inherited</span> Assign(Source);
 <span class="keyword">end</span>;
 
@@ -2266,10 +2962,41 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
 </div>
 </div>
 <div class="paragraph">
-<p>Sometimes it&#8217;s more comfortable to alternatively override the <code>AssignTo</code> method in the source class, instead of overriding the <code>Assign</code> method in the target class.</p>
+<p>Sometimes it&#8217;s more comfortable to alternatively override the <code>AssignTo</code> method in the source class, instead of overriding the <code>Assign</code> method in the destination class.</p>
 </div>
 <div class="paragraph">
-<p>Be careful when calling <code>inherited</code> in the <code>Assign</code> implementation. You should <em>call inherited <code>TPersistent.Assign</code> only if you cannot handle the assignment in your code</em> (this allows the <code>AssignTo</code> method to work, or otherwise raise an exception when assignment cannot be done). On the other hand, if your class descends from another class that already implements the <code>Assign</code> method, then <em>always call the inherited <code>TMyClass.Assign</code></em>. See the example below.</p>
+<p>Be careful when you call <code>inherited</code> in the overridden <code>Assign</code> implementation. There are two situations:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Your class is a direct descendant of the <code>TPersistent</code> class. (Or, it&#8217;s not a direct descendant of <code>TPersistent</code>, but no ancestor has overridden the <code>Assign</code> method.)</dt>
+<dd>
+<p>In this case, your class should use the <code>inherited</code> keyword (to call the <code>TPersistent.Assign</code>) <em>only if you cannot handle the assignment in your code</em>.</p>
+</dd>
+<dt class="hdlist1">Your class descends from some class that has already overridden the <code>Assign</code> method.</dt>
+<dd>
+<p>In this case, your class should <em>always</em> use the <code>inherited</code> keyword (to call the ancestor <code>Assign</code>). In general, calling <code>inherited</code> in overridden methods is <em>usually</em> a good idea.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>To understand the need when to call (or not to call) <code>inherited</code> from the <code>Assign</code> implementation, and how it relates to the <code>AssignTo</code> method, it&#8217;s best to look at the <code>TPersistent.Assign</code> and <code>TPersistent.AssignTo</code> implementations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">procedure</span> TPersistent.Assign(Source: TPersistent);
+<span class="keyword">begin</span>
+  <span class="keyword">if</span> Source &lt;&gt; <span class="keyword">nil</span> <span class="keyword">then</span>
+    Source.AssignTo(Self)
+  <span class="keyword">else</span>
+    <span class="keyword">raise</span> EConvertError...
+end;
+
+<span class="keyword">procedure</span> TPersistent.AssignTo(Destination: TPersistent);
+<span class="keyword">begin</span>
+  <span class="keyword">raise</span> EConvertError...
+end;</code></pre>
+</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2278,7 +3005,51 @@ S := Download(<span class="string"><span class="delimiter">'</span><span class="
 <div class="title">Note</div>
 </td>
 <td class="content">
-Remember that when descending from <code>TPersistent</code>, the default <em>visibility specifier</em> is <code>published</code>, to allow streaming of <code>TPersistent</code> descendants. Not all field and property types are allowed in the <code>published</code> section. If you get errors related to it, and you don&#8217;t care about streaming, just change the visibility to <code>public</code>. See the <a href="#_visibility_specifiers">Visibility specifiers</a> section.
+This is not the <strong>exact</strong> implementation of <code>TPersistent</code>, I simplified it to hide the boring details about how the exception message is build.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The conclusions you can get from the above are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>If neither <code>Assign</code> nor <code>AssignTo</code> are overridden</em>, then calling them will result in an exception.</p>
+</li>
+<li>
+<p>Also, note that there is <em>no</em> code in <code>TPersistent</code> implementation that automatically copies all the fields (or all the published fields) of the classes. That&#8217;s why you need to do that yourself, by overriding <code>Assign</code> in all the classes. You can use RTTI (runtime type information) for that, but for simple cases you will probably just list the fields to be copied manually.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When you have a class like <code>TApple</code>, your <code>TApple.Assign</code> implementation usually deals with copying fields that are specific to the <code>TApple</code> class (not to the <code>TApple</code> ancestor, like <code>TFruit</code>). So, the <code>TApple.Assign</code> implementation usually checks whether <code>Source is TApple</code> at the beginning, before copying apple-related fields. Then, it calls <code>inherited</code> to allow <code>TFruit</code> to handle the rest of the fields.</p>
+</div>
+<div class="paragraph">
+<p>Assuming that you implemented <code>TFruit.Assign</code> and <code>TApple.Assign</code> following the standard pattern (as shown in the example above), the effect is like this:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If you pass <code>TApple</code> instance to <code>TApple.Assign</code>, it will work and copy all the fields.</p>
+</li>
+<li>
+<p>If you pass <code>TOrange</code> instance to <code>TApple.Assign</code>, it will work and only copy the common fields shared by both <code>TOrange</code> and <code>TApple</code>. In other words, the fields defined at <code>TFruit</code>.</p>
+</li>
+<li>
+<p>If you pass <code>TWerewolf</code> instance to <code>TApple.Assign</code>, it will raise an exception (because <code>TApple.Assign</code> will call <code>TFruit.Assign</code> which will call <code>TPersistent.Assign</code> which raises an exception).</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Remember that when descending from <code>TPersistent</code>, the default <em>visibility specifier</em> is <code>published</code>, to allow streaming of <code>TPersistent</code> descendants. Not all field and property types are allowed in the <code>published</code> section. If you get errors related to it, and you don&#8217;t care about streaming, just change the visibility to <code>public</code>. See the <a href="#_visibility_specifiers">Visibility specifiers</a>.
 </td>
 </tr>
 </table>
@@ -2482,7 +3253,7 @@ Remember that when descending from <code>TPersistent</code>, the default <em>vis
 <p>A powerful feature of any modern language. The definition of something (typically, of a class) can be parameterized with another type. The most typical example is when you need to create a container (a list, dictionary, tree, graph&#8230;&#8203;): you can define <em>a list of type T</em>, and then <em>specialize</em> it to instantly get <em>a list of integers</em>, <em>a list of strings</em>, <em>a list of TMyRecord</em>, and so on.</p>
 </div>
 <div class="paragraph">
-<p>The generics in Pascal are realized much like generics in C++. Which means that they are "expanded" at the specialization time, a <em>little</em> like macros (but when expanding, the identifiers from the generic definition are used, so you cannot "inject" any unexpected behavior into a generic when specializing it). In effect this means that they are very fast (can be optimized for each particular type)  and work with types of any size. You can use a primitive type (integer, float) as well as a record as well as a class when specializing a generic.</p>
+<p>The generics in Pascal are realized much like generics in C++. Which means that they are <em>"expanded"</em> at the specialization time, a <em>little</em> like macros (but much safer than macros; for example, the identifiers are resolved at the time of generic definition, not at specialization, so you cannot "inject" any unexpected behavior when specializing the generic). In effect this means that they are very fast (can be optimized for each particular type)  and work with types of any size. You can use a primitive type (integer, float) as well as a record as well as a class when specializing a generic.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2547,6 +3318,9 @@ Remember that when descending from <code>TPersistent</code>, the default <em>vis
   Writeln(<span class="string"><span class="delimiter">'</span><span class="content">Min (</span><span class="char">''</span><span class="content">a</span><span class="char">''</span><span class="content">, </span><span class="char">''</span><span class="content">b</span><span class="char">''</span><span class="content">): </span><span class="delimiter">'</span></span>, Min&lt;<span class="keyword">string</span>&gt;(<span class="char"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>, <span class="char"><span class="delimiter">'</span><span class="content">b</span><span class="delimiter">'</span></span>));
 <span class="keyword">end</span>.</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>See also the <a href="#generic-containers-section">Containers (lists, dictionaries) using generics</a> about important standard classes using generics.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2972,45 +3746,14 @@ for TList from Generics.Collections module you don&#8217;t need to override oper
 <p>The <code>private</code> visibility specifier means that the field (or method) is not accessible outside of this class. But it allows an exception: all the code defined <em>in the same unit</em> can break this, and access private fields and methods. A C++ programmer would say that in Pascal <em>all classes within a single unit are friends</em>. This is often useful, and doesn&#8217;t break your encapsulation, since it&#8217;s limited to a unit.</p>
 </div>
 <div class="paragraph">
-<p>However, if you create larger units, with many classes (that are not tightly integrated with each other), it&#8217;s safer to use <code>strict private</code>. As you can guess, it means that the field (or method) in not accessible outside of this class&#8201;&#8212;&#8201;period. No exceptions.</p>
+<p>However, if you create larger units, with many classes (that are not tightly integrated with each other), it&#8217;s safer to use <code>strict private</code>. It means that the field (or method) is not accessible outside of this class&#8201;&#8212;&#8201;period. No exceptions.</p>
 </div>
 <div class="paragraph">
 <p>In a similar manner, there&#8217;s <code>protected</code> visibility (visible to descendants, or friends in the same unit) and <code>strict protected</code> (visible to descendants, period).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_class_methods">8.2. Class methods</h3>
-<div class="paragraph">
-<p>These are methods you can call having a class reference (<code>TMyClass</code>), not necessarily a class instance.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">type</span>
-  TEnemy = <span class="keyword">class</span>
-    <span class="keyword">procedure</span> Kill;
-    <span class="keyword">class</span> <span class="keyword">procedure</span> KillAll;
-  <span class="keyword">end</span>;
-
-<span class="keyword">var</span>
-  E: TEnemy;
-<span class="keyword">begin</span>
-  E := TEnemy.Create;
-  <span class="keyword">try</span>
-    E.Kill;
-  <span class="keyword">finally</span> FreeAndNil(E) <span class="keyword">end</span>;
-  TEnemy.KillAll;
-<span class="keyword">end</span>;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Note that they can be virtual&#8201;&#8212;&#8201;it makes sense, and is sometimes very useful, when combined with <a href="#_class_references">Class references</a>.</p>
-</div>
-<div class="paragraph">
-<p>Note that a constructor always acts like a class method when called in a normal fashion (<code>MyInstance := TMyClass.Create(&#8230;&#8203;);</code>). Although it&#8217;s possible to also call a constructor from within the class itself, like a normal method, and then it acts like a normal method. This is a useful feature to "chain" constructors, when one constructor (e.g. overloaded to take an integer parameter) does some job, and then calls another constructor (e.g. parameter-less).</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_more_stuff_inside_classes_and_nested_classes">8.3. More stuff inside classes and nested classes</h3>
+<h3 id="_more_stuff_inside_classes_and_nested_classes">8.2. More stuff inside classes and nested classes</h3>
 <div class="paragraph">
 <p>You can open a section of constants (<code>const</code>) or types (<code>type</code>) within a class. This way, you can even define a class within a class. The visibility specifiers work as always, in particular the nested class can be private (not visible to the outside world), which is often useful.</p>
 </div>
@@ -3056,6 +3799,40 @@ for TList from Generics.Collections module you don&#8217;t need to override oper
 <span class="keyword">begin</span>
 <span class="keyword">end</span>;</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_class_methods">8.3. Class methods</h3>
+<div class="paragraph">
+<p>These are methods you can call having a class reference (<code>TMyClass</code>), not necessarily a class instance.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="keyword">type</span>
+  TEnemy = <span class="keyword">class</span>
+    <span class="keyword">procedure</span> Kill;
+    <span class="keyword">class</span> <span class="keyword">procedure</span> KillAll;
+  <span class="keyword">end</span>;
+
+<span class="keyword">var</span>
+  E: TEnemy;
+<span class="keyword">begin</span>
+  E := TEnemy.Create;
+  <span class="keyword">try</span>
+    E.Kill;
+  <span class="keyword">finally</span> FreeAndNil(E) <span class="keyword">end</span>;
+  TEnemy.KillAll;
+<span class="keyword">end</span>;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that they can be virtual&#8201;&#8212;&#8201;it makes sense, and is sometimes very useful, when combined with <a href="#_class_references">Class references</a>.</p>
+</div>
+<div class="paragraph">
+<p>The class methods can also be limited by the <a href="#_visibility_specifiers">Visibility specifiers</a>, like <code>private</code> or <code>protected</code>. Just like regular methods.</p>
+</div>
+<div class="paragraph">
+<p>Note that a constructor always acts like a class method when called in a normal fashion (<code>MyInstance := TMyClass.Create(&#8230;&#8203;);</code>). Although it&#8217;s possible to also call a constructor from within the class itself, like a normal method, and then it acts like a normal method. This is a useful feature to "chain" constructors, when one constructor (e.g. overloaded to take an integer parameter) does some job, and then calls another constructor (e.g. parameter-less).</p>
 </div>
 </div>
 <div class="sect2">
@@ -3168,7 +3945,129 @@ for TList from Generics.Collections module you don&#8217;t need to override oper
 </div>
 </div>
 <div class="sect2">
-<h3 id="_class_helpers">8.5. Class helpers</h3>
+<h3 id="_static_class_methods">8.5. Static class methods</h3>
+<div class="paragraph">
+<p>To understand the <em>static class methods</em>, you have to understand how the <em>normal class methods</em> (described in the previous sections) work. Internally, <em>normal class methods</em> receive a <em>class reference</em> of their class (it is passed through a hidden, implicitly added 1st parameter of the method). This class reference can be even accessed explicitly using the <code>Self</code> keyword inside the class method. Usually, it&#8217;s a good thing: this class reference allows you to call <em>virtual class methods</em> (through the <em>virtual method table</em> of the class).</p>
+</div>
+<div class="paragraph">
+<p>While this is nice, it makes the <em>normal class methods</em> incompatible when assigning to a <em>global procedure pointer</em>. That is, <strong>this will not compile</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode objfpc}</span><span class="preprocessor">{$H+}</span><span class="preprocessor">{$J-}</span>
+<span class="keyword">type</span>
+  TMyCallback = <span class="keyword">procedure</span> (A: Integer);
+
+  TMyClass = <span class="keyword">class</span>
+    <span class="keyword">class</span> <span class="keyword">procedure</span> Foo(A: Integer);
+  <span class="keyword">end</span>;
+
+<span class="keyword">class</span> <span class="keyword">procedure</span> TMyClass.Foo(A: Integer);
+<span class="keyword">begin</span>
+<span class="keyword">end</span>;
+
+<span class="keyword">var</span>
+  Callback: TMyCallback;
+<span class="keyword">begin</span>
+  <span class="comment">// Error: TMyClass.Foo not compatible with TMyCallback</span>
+  Callback := @TMyClass(<span class="keyword">nil</span>).Foo;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the <em>Delphi mode</em> you would be able to write <code>TMyClass.Foo</code> instead of an ugly <code>TMyClass(nil).Foo</code> in the example above. Admittedly, the <code>TMyClass.Foo</code> looks much more elegant, and it is also better checked by the compiler. Using the <code>TMyClass(nil).Foo</code> is a hack&#8230;&#8203; unfortunately, necessary (for now) in the <em>ObjFpc mode</em> which is presented throughout this book.</p>
+</div>
+<div class="paragraph">
+<p>In any case, assigning the <code>TMyClass.Foo</code> to the <code>Callback</code> above would <em>still fail</em> in the Delphi mode, for exactly the same reasons.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The above example fails to compile, because the <code>Callback</code> is incompatible with the class method <code>Foo</code>. And it&#8217;s incompatible because internally the class method has that special hidden <em>implicit</em> parameter to pass a class reference.</p>
+</div>
+<div class="paragraph">
+<p>One way to fix the above example is to change the definition of <code>TMyCallback</code>. It will work if it is a method callback, declared as <code>TMyCallback = procedure (A: Integer) of object;</code>. But sometimes, it&#8217;s not desirable.</p>
+</div>
+<div class="paragraph">
+<p>Here comes the <code>static</code> class method. It is, in essence, just a global procedure / function, but it&#8217;s namespace is limited inside the class. It <em>does not</em> have any implicit class reference (and so, <em>it cannot be virtual</em> and <em>it cannot call virtual class methods</em>). On the upside, it is compatible with normal (non-object) callbacks. So this will work:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">type</span>
+  TMyCallback = <span class="keyword">procedure</span> (A: Integer);
+
+  TMyClass = <span class="keyword">class</span>
+    <span class="keyword">class</span> <span class="keyword">procedure</span> Foo(A: Integer); static;
+  <span class="keyword">end</span>;
+
+<span class="keyword">class</span> <span class="keyword">procedure</span> TMyClass.Foo(A: Integer);
+<span class="keyword">begin</span>
+<span class="keyword">end</span>;
+
+<span class="keyword">var</span>
+  Callback: TMyCallback;
+<span class="keyword">begin</span>
+  Callback := @TMyClass.Foo;
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_class_properties_and_variables">8.6. Class properties and variables</h3>
+<div class="paragraph">
+<p>A <em>class property</em> is a property that can be accessed through a class reference (it does not need a class instance).</p>
+</div>
+<div class="paragraph">
+<p>It is quite straightforward analogy of a regular property (see <a href="#_properties">Properties</a>). For a <em>class property</em>, you define a <em>getter</em> and / or a <em>setter</em>. They may refer to a <em>class variable</em> or a <em>static class method</em>.</p>
+</div>
+<div class="paragraph">
+<p>A <em>class variable</em> is, you guessed it, like a regular field but you don&#8217;t need a class instance to access it. In effect, it&#8217;s just like a global variable, but with the namespace limited to the containing class. It can be declared within the <code>class var</code> section of the class. Alternatively
+it can be declared by following the normal field definition with the keyword <code>static</code>.</p>
+</div>
+<div class="paragraph">
+<p>And a <em>static class method</em> is just like a global procedure / function, but with the namespace limited to the containing class. More about static class methods in the section above, see <a href="#_static_class_methods">Static class methods</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">type</span>
+  TMyClass = <span class="keyword">class</span>
+  strict <span class="directive">private</span>
+    <span class="comment">// Alternative:</span>
+    <span class="comment">// FMyProperty: Integer; static;</span>
+    <span class="keyword">class</span> <span class="keyword">var</span>
+      FMyProperty: Integer;
+    <span class="keyword">class</span> <span class="keyword">procedure</span> SetMyProperty(<span class="keyword">const</span> Value: Integer); static;
+  <span class="directive">public</span>
+    <span class="keyword">class</span> <span class="keyword">property</span> MyProperty: Integer
+      <span class="directive">read</span> FMyProperty <span class="directive">write</span> SetMyProperty;
+  <span class="keyword">end</span>;
+
+<span class="keyword">class</span> <span class="keyword">procedure</span> TMyClass.SetMyProperty(<span class="keyword">const</span> Value: Integer);
+<span class="keyword">begin</span>
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">MyProperty changes!</span><span class="delimiter">'</span></span>);
+  FMyProperty := Value;
+<span class="keyword">end</span>;
+
+<span class="keyword">begin</span>
+  TMyClass.MyProperty := <span class="integer">123</span>;
+  Writeln(<span class="string"><span class="delimiter">'</span><span class="content">TMyClass.MyProperty is now </span><span class="delimiter">'</span></span>, TMyClass.MyProperty);
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_class_helpers">8.7. Class helpers</h3>
 <div class="paragraph">
 <p>The <em>method</em> is just a procedure or function inside a class. From the outside of the class, you call it with a special syntax <code>MyInstance.MyMethod(&#8230;&#8203;)</code>. After a while you grow accustomed to thinking that <em>if I want to make action Action on instance X, I write `X.Action(&#8230;&#8203;)`</em>.</p>
 </div>
@@ -3226,7 +4125,7 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
 </div>
 </div>
 <div class="sect2">
-<h3 id="_virtual_constructors_destructors">8.6. Virtual constructors, destructors</h3>
+<h3 id="_virtual_constructors_destructors">8.8. Virtual constructors, destructors</h3>
 <div class="paragraph">
 <p>Destructor name is always <code>Destroy</code>, it is virtual (since you can call it without knowing the exact class at compile-time) and parameter-less.</p>
 </div>
@@ -3244,7 +4143,7 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
 </div>
 </div>
 <div class="sect2">
-<h3 id="_an_exception_in_constructor">8.7. An exception in constructor</h3>
+<h3 id="_an_exception_in_constructor">8.9. An exception in constructor</h3>
 <div class="paragraph">
 <p>What happens if an exception happens during a constructor? The line</p>
 </div>
@@ -3257,7 +4156,7 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
 <p>does not execute to the end in this case, <code>X</code> cannot be assigned, so who will cleanup after a partially-constructed class?</p>
 </div>
 <div class="paragraph">
-<p>The solution of Object Pascal is that, in case an exception occurs within a constructor, then the destructor is called. This is a reason why <em>your destructor must be robust</em>, which means it should work in any circumstances, even on half-created class instance. Usually this is easy if you release everything safely, like by <code>FreeAndNil</code>.</p>
+<p>The solution of Object Pascal is that, in case an exception occurs within a constructor, then the destructor is called. This is a reason why <em>your destructor must be robust</em>, which means it should work in any circumstances, even on a half-created class instance. Usually this is easy if you release everything safely, like by <code>FreeAndNil</code>.</p>
 </div>
 <div class="paragraph">
 <p>We also have to depend in such cases that <em>the memory of the class is guaranteed to be zeroed right before the constructor code is executed</em>. So we know that at the beginning, all class references are <code>nil</code>, all integers are <code>0</code> and so on.</p>
@@ -3317,7 +4216,7 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
 <h2 id="_interfaces">9. Interfaces</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_good_corba_interfaces">9.1. Good (CORBA) interfaces</h3>
+<h3 id="_bare_corba_interfaces">9.1. Bare (CORBA) interfaces</h3>
 <div class="paragraph">
 <p><em>An interface</em> declares an API, much like a class, but it does not define the implementation. A class can implement many interfaces, but it can only have one ancestor class.</p>
 </div>
@@ -3336,6 +4235,7 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
 
 <span class="keyword">type</span>
   IMyInterface = <span class="keyword">interface</span>
+  [<span class="string"><span class="delimiter">'</span><span class="content">{79352612-668B-4E8C-910A-26975E103CAC}</span><span class="delimiter">'</span></span>]
     <span class="keyword">procedure</span> Shoot;
   <span class="keyword">end</span>;
 
@@ -3385,6 +4285,8 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
       UseThroughInterface(C1 <span class="keyword">as</span> IMyInterface);
     <span class="keyword">if</span> C2 <span class="keyword">is</span> IMyInterface <span class="keyword">then</span>
       UseThroughInterface(C2 <span class="keyword">as</span> IMyInterface);
+    <span class="comment">// The &quot;C3 is IMyInterface&quot; below is false,</span>
+    <span class="comment">// so &quot;UseThroughInterface(C3 as IMyInterface)&quot; will not execute.</span>
     <span class="keyword">if</span> C3 <span class="keyword">is</span> IMyInterface <span class="keyword">then</span>
       UseThroughInterface(C3 <span class="keyword">as</span> IMyInterface);
   <span class="keyword">finally</span>
@@ -3395,22 +4297,133 @@ The more general concept is <em>"type helper"</em>. Using them you can add metho
 <span class="keyword">end</span>.</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-The default interface style
-is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <code>{$interfaces corba}</code> directive, in all modern code dealing with interfaces. The <em>COM</em> interfaces are somewhat an <em>embarrassment to the language</em>, to be honest (details in the next section).
-</td>
-</tr>
-</table>
+</div>
+<div class="sect2">
+<h3 id="_corba_and_com_types_of_interfaces">9.2. CORBA and COM types of interfaces</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Why are the interfaces (presented above) called "CORBA"?</dt>
+<dd>
+<p>The name <strong>CORBA</strong> is unfortunate. A better name would be <strong>bare interfaces</strong>. These interfaces are a <em>"pure language feature"</em>. Use them when you want to cast various classes as the same interface, because they share a common API.</p>
+<div class="paragraph">
+<p>While these types of interfaces can be used together with the <em>CORBA (Common Object Request Broker Architecture) technology</em> (see <a href="https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture" class="bare">https://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture</a>), they are <em>not</em> tied to this technology in any way.</p>
+</div>
+</dd>
+<dt class="hdlist1">Is the <code>{$interfaces corba}</code> declaration needed?</dt>
+<dd>
+<p>Yes, because by default
+you create <em>COM interfaces</em>. This can be stated explicitly by saying <code>{$interfaces com}</code>, but usually it&#8217;s not needed since it&#8217;s the default state.</p>
+<div class="paragraph">
+<p>And I don&#8217;t advice using <em>COM interfaces</em>, especially if you&#8217;re looking for something equivalent to interfaces from other programming languages. The <em>CORBA interfaces</em> in Pascal are exactly what you expect if you&#8217;re looking for something equivalent to the interfaces in C# and Java. While the <em>COM interfaces</em> bring additional features that you possibly don&#8217;t want.</p>
+</div>
+<div class="paragraph">
+<p>Note that the <code>{$interfaces xxx}</code> declaration only affects the interfaces that do not have any explicit ancestor (just the keyword <code>interface</code>, not <code>interface(ISomeAncestor)</code>). When an interface has an ancestor, it has the same type as the ancestor, regardless of the <code>{$interfaces xxx}</code> declaration.</p>
+</div>
+</dd>
+<dt class="hdlist1">What are COM interfaces?</dt>
+<dd>
+<p>The <em>COM interface</em> is synonymous with <em>an interface descending from a special <code>IUnknown</code> interface</em>. Descending from <code>IUnknown</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Requires that your classes define the <code>_AddRef</code> and <code>_ReleaseRef</code> methods. Proper implementation of these methods can manage the lifetime of your objects using the reference-counting.</p>
+</li>
+<li>
+<p>Adds the <code>QueryInterface</code> method.</p>
+</li>
+<li>
+<p>Allows to interact with the <em>COM (Component Object Model) technology</em>.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Why do you advice to not use the COM interfaces?</dt>
+<dd>
+<p>Because <em>COM interfaces</em> "entangle" two features that should be unrelated (orthogonal) in my view: <em>multiple inheritance</em> and <em>reference counting</em>. Other programming languages rightly use separate concepts for these two features.</p>
+<div class="paragraph">
+<p>To be clear: <strong>reference-counting</strong>, that provides an automatic memory management (in simple situations, i.e. without cycles), <strong>is a very useful concept</strong>. But <strong>entangling this feature with interfaces (instead of making them orthogonal features) is unclean in my eyes</strong>. It definitely doesn&#8217;t match my use cases.</p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Sometimes I want to cast my (otherwise unrelated) classes to a common interface.</p>
+</li>
+<li>
+<p>Sometimes I want to manage memory using the reference counting approach.</p>
+</li>
+<li>
+<p><em>Maybe</em> some day I will want to interact with the <em>COM technology</em>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>But these are all separate, unrelated needs. Entangling them in a single language feature is counter-useful in my experience. It does cause actual problems:</p>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>If I want the feature of <em>casting classes to a common interface API</em>, but I don&#8217;t want the reference-counting mechanism (I want to manually free objects), then the COM interfaces are problematic. Even when reference-counting is disabled by a special <code>_AddRef</code> and <code>_ReleaseRef</code> implementation, you still need to be careful to never have a temporary interface reference hanging, after you have freed the class instance. More details about it in the next section.</p>
+</li>
+<li>
+<p>If I want the feature of <em>reference counting</em>, but I have no need for an interface hierarchy to represent something different than the class hierarchy, then I have to duplicate my classes API in interfaces. Thus creating a single interface for each class. This is counter-productive. I would much rather have <em>smart pointers</em> as a separate language feature, not entangled with interfaces (and luckily, it&#8217;s coming:).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>That is why I advice to use <em>CORBA</em> style interfaces, and the <code>{$interfaces corba}</code> directive, in all modern code dealing with interfaces.</p>
+</div>
+<div class="paragraph">
+<p><em>Only if you need both "reference counting" and "multiple inheritance" at the same time, then use COM interfaces</em>. Also, Delphi has only COM interfaces for now, so you need to use COM interfaces if your code must be compatible with Delphi.</p>
+</div>
+</dd>
+<dt class="hdlist1">Can we have reference-counting with CORBA interfaces?</dt>
+<dd>
+<p>Yeah. Just add <code>_AddRef</code> / <code>_ReleaseRef</code> methods. There&#8217;s no need to descend from the <code>IUnknown</code> interface. Although in most cases, if you want reference-counting with your interfaces, you may as well just use COM interfaces.</p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ugly_com_interfaces">9.2. Ugly (COM) interfaces</h3>
+<h3 id="_interfaces_guids">9.3. Interfaces GUIDs</h3>
+<div class="paragraph">
+<p>GUIDs are the seemingly random characters <code>['{ABCD1234-&#8230;&#8203;}']</code> that you see placed at every interface definition. Yes, they are just random. Unfortunately, they are necessary.</p>
+</div>
+<div class="paragraph">
+<p>The GUIDs have no meaning if you don&#8217;t plan on integrating with communication technologies like <em>COM</em> nor <em>CORBA</em>. But they are necessary, for implementation reasons. Don&#8217;t be fooled by the compiler, that unfortunately allows you to declare interfaces without GUIDs.</p>
+</div>
+<div class="paragraph">
+<p>Without the (unique) GUIDs, your interfaces will be treated equal by the <code>is</code> operator. In effect, it will return <code>true</code> if your class supports <em>any</em> of your interfaces. The magic function <code>Supports(ObjectInstance, IMyInterface)</code> behaves slightly better here, as it refuses to be compiled for interfaces without a GUID. This is true for both CORBA and COM interfaces, as of FPC 3.0.0.</p>
+</div>
+<div class="paragraph">
+<p>So, to be on the safe side, you should always declare a GUID for your interface. You can use <em>Lazarus</em> GUID generator (<code>Ctrl + Shift + G</code> shortcut in the editor). Or you can use an online service like <a href="https://www.guidgenerator.com/" class="bare">https://www.guidgenerator.com/</a> .</p>
+</div>
+<div class="paragraph">
+<p>Or you can write your own tool for this, using the <code>CreateGUID</code> and <code>GUIDToString</code> functions in RTL. See the example below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="pascal"><span class="preprocessor">{$mode delphi}</span>
+<span class="keyword">uses</span> SysUtils;
+<span class="keyword">var</span>
+  MyGuid: TGUID;
+<span class="keyword">begin</span>
+  Randomize;
+  CreateGUID(MyGuid);
+  Writeln(<span class="char"><span class="delimiter">'</span><span class="content">[</span><span class="delimiter">'</span></span><span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span> + GUIDToString(MyGuid) + <span class="string"><span class="delimiter">'</span><span class="char">''</span><span class="content">]</span><span class="delimiter">'</span></span>);
+<span class="keyword">end</span>.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_counted_com_interfaces">9.4. Reference-counted (COM) interfaces</h3>
 <div class="paragraph">
 <p>The <em>COM interfaces</em> bring two additional features:</p>
 </div>
@@ -3425,16 +4438,13 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 </ol>
 </div>
 <div class="paragraph">
-<p>In my eyes, it was rather ugly to entangle <em>interfaces</em> with such features. It complicates using the interfaces for the simple purpose: when multiple classes implement the same API, but cannot descend from a common class. When using <em>COM interfaces</em>, you need to be aware of their <em>automatic destruction</em> mechanism and relation to COM technology.</p>
+<p>When using <em>COM interfaces</em>, you need to be aware of their <em>automatic destruction</em> mechanism and relation to COM technology.</p>
 </div>
 <div class="paragraph">
 <p>In practice, this means that:</p>
 </div>
 <div class="ulist">
 <ul>
-<li>
-<p>You need to declare a GUID at your COM interfaces, to make the <code>Supports(ObjectInstance, IMyInterface)</code> or <code>ObjectInstance is IMyInterface</code> work. Just use <em>Lazarus</em> GUID generator (<code>Ctrl + Shift + G</code> shortcut in the editor).</p>
-</li>
 <li>
 <p>Your class needs to implement a magic <code>_AddRef</code>, <code>_Release</code>, and <code>QueryInterface</code> methods. Or descend from something that already implements them. A particular implementation of these methods may actually enable or disable the <em>reference-counting</em> feature of COM interfaces (although disabling it is somewhat dangerous&#8201;&#8212;&#8201;see the next point).</p>
 <div class="ulist">
@@ -3547,7 +4557,7 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_com_interfaces_with_reference_counting_disabled">9.3. Using COM interfaces with reference-counting disabled</h3>
+<h3 id="_using_com_interfaces_with_reference_counting_disabled">9.5. Using COM interfaces with reference-counting disabled</h3>
 <div class="paragraph">
 <p>As mentioned in the previous section, your class can descend from <code>TComponent</code> (or a similar class like <code>TNonRefCountedInterfacedObject</code> and <code>TNonRefCountedInterfacedPersistent</code>) which disables reference-counting for COM interfaces. This allows you to use COM interfaces, and still free the class instance manually.</p>
 </div>
@@ -3635,7 +4645,7 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_typecasting_interfaces_without_as_operator">9.4. Typecasting interfaces without "as" operator</h3>
+<h3 id="_typecasting_interfaces_without_as_operator">9.6. Typecasting interfaces without "as" operator</h3>
 <div class="paragraph">
 <p>This section applies to both <em>CORBA</em> and <em>COM</em> interfaces.</p>
 </div>
@@ -3685,7 +4695,7 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 <p>Copyright Michalis Kamburelis.</p>
 </div>
 <div class="paragraph">
-<p>The source code of this document is in AsciiDoc on <a href="https://github.com/michaliskambi/modern-pascal-introduction" class="bare">https://github.com/michaliskambi/modern-pascal-introduction</a> . Suggestions for corrections and additions, and patches and pull requests, are always very welcome:) You can reach me through GitHub or email <a href="mailto:michalis.kambi@gmail.com">michalis.kambi@gmail.com</a> . My homepage is <a href="https://michalis.ii.uni.wroc.pl/~michalis/" class="bare">https://michalis.ii.uni.wroc.pl/~michalis/</a> .</p>
+<p>The source code of this document is in AsciiDoc on <a href="https://github.com/michaliskambi/modern-pascal-introduction" class="bare">https://github.com/michaliskambi/modern-pascal-introduction</a>. Suggestions for corrections and additions, and patches and pull requests, are always very welcome:) You can reach me through GitHub or email <a href="mailto:michalis.kambi@gmail.com">michalis.kambi@gmail.com</a>. My homepage is <a href="https://michalis.ii.uni.wroc.pl/~michalis/" class="bare">https://michalis.ii.uni.wroc.pl/~michalis/</a>. This document is linked under the <em>Documentation</em> section of the <em>Castle Game Engine</em> website <a href="https://castle-engine.io/" class="bare">https://castle-engine.io/</a>.</p>
 </div>
 <div class="paragraph">
 <p>The source code of this document without the "generic" / "specialize" keywords on <a href="https://github.com/maciej-izak/modern-pascal-introduction" class="bare">https://github.com/maciej-izak/modern-pascal-introduction</a> .</p>
@@ -3711,7 +4721,7 @@ is <em>COM</em>. But I advice to use <em>CORBA</em> style interfaces, and the <c
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-16 00:25:45 îrodkowoeuropejski czas letni
+Last updated 2018-09-03 20:32:52 îrodkowoeuropejski czas letni
 </div>
 </div>
 <!-- Google analytics -->
